@@ -1,0 +1,24 @@
+name: Question / support
+description: Ask how to do something with fluidity-ts
+title: "[Q]: "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For open-ended discussions please use **GitHub Discussions** instead.
+        Use this template if you suspect a documentation gap.
+  - type: textarea
+    id: question
+    attributes:
+      label: What are you trying to do?
+    validations:
+      required: true
+  - type: textarea
+    id: tried
+    attributes:
+      label: What have you tried?
+  - type: input
+    id: version
+    attributes:
+      label: fluidity-ts version

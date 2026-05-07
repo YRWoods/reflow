@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Discussions
+    url: https://github.com/fluidiety/fluidity-ts/discussions
+    about: Ask questions, share recipes, propose ideas
+  - name: 🔐 Security advisory
+    url: https://github.com/fluidiety/fluidity-ts/security/advisories/new
+    about: Report a vulnerability privately

@@ -1,0 +1,48 @@
+name: Bug report
+description: Something isn't working as documented
+title: "[Bug]: "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for filing a bug! Please provide enough information to reproduce.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the bug clearly. Include error messages and screenshots if relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+  - type: input
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: A StackBlitz / CodeSandbox link is strongly preferred.
+      placeholder: https://stackblitz.com/edit/...
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: fluidity-ts version
+      placeholder: 1.0.0
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: Environment (framework, React version, browser, OS)
+      placeholder: Next.js 15, React 19, Chrome 130, macOS 15
+    validations:
+      required: true
+  - type: textarea
+    id: extra
+    attributes:
+      label: Additional context
