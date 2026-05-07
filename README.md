@@ -21,7 +21,7 @@
 </p>
 
 <p align="center">
-  <a href="https://stackblitz.com/github/Fluidiety/fluidity-ts/tree/main/examples/vite-react"><img src="https://developer.stackblitz.com/img/open_in_stackblitz.svg" alt="Open in StackBlitz" /></a>
+  <a href="https://stackblitz.com/github/Fluidiety/fluidity-ts-demo"><img src="https://developer.stackblitz.com/img/open_in_stackblitz.svg" alt="Open in StackBlitz" /></a>
 </p>
 
 ```bash
