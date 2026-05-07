@@ -1,6 +1,6 @@
 {
   "name": "fluidity-ts",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "The complete, SSR-safe, framework-agnostic responsive toolkit for TypeScript: typed breakpoints, fluid clamp, container queries, modern preference media, and a first-class React adapter — zero runtime deps.",
   "keywords": [
     "responsive",
@@ -120,8 +120,7 @@
     { "name": "server (esm, gz)", "path": "dist/server/index.js", "limit": "1.5 KB" }
   ],
   "publishConfig": {
-    "access": "public",
-    "provenance": true
+    "access": "public"
   },
   "engines": {
     "node": ">=18"
