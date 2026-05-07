@@ -43,7 +43,7 @@ function Demo() {
       </p>
 
       <section className="grid">
-        <Stat label="Active breakpoint" value={bp} />
+        <Stat label="Active breakpoint" value={bp.active} />
         <Stat label="Viewport" value={`${width} × ${height}`} />
         <Stat label="Device pixel ratio" value={dpr.toFixed(2)} />
         <Stat label="Pointer" value={pointer.fine ? "fine" : pointer.coarse ? "coarse" : "none"} />
