@@ -8,6 +8,8 @@ export default defineConfig({
     "server/index": "src/server/index.ts",
     "testing/index": "src/testing/index.ts",
     "tailwind/index": "src/tailwind/index.ts",
+    "vue/index": "src/vue/index.ts",
+    "svelte/index": "src/svelte/index.ts",
   },
   format: ["esm", "cjs"],
   dts: true,
@@ -16,5 +18,5 @@ export default defineConfig({
   splitting: true,
   treeshake: true,
   target: "es2020",
-  external: ["react", "react-dom"],
+  external: ["react", "react-dom", "vue", "svelte", "svelte/store"],
 });
