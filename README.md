@@ -16,9 +16,11 @@
 
 <p>
   <a href="https://www.npmjs.com/package/fluidity-ts"><img alt="npm version" src="https://img.shields.io/npm/v/fluidity-ts?style=flat-square&color=0EA5A5"></a>
+  <a href="https://www.npmjs.com/package/fluidity-ts"><img alt="downloads" src="https://img.shields.io/npm/dm/fluidity-ts?style=flat-square&label=downloads&color=22D3EE"></a>
   <a href="https://bundlephobia.com/package/fluidity-ts"><img alt="bundle size" src="https://img.shields.io/bundlephobia/minzip/fluidity-ts?style=flat-square&label=gzip&color=67E8F0"></a>
   <a href="https://www.npmjs.com/package/fluidity-ts"><img alt="types" src="https://img.shields.io/npm/types/fluidity-ts?style=flat-square&color=3178C6"></a>
   <a href="https://github.com/fluidiety/fluidity-ts/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/fluidiety/fluidity-ts/ci.yml?style=flat-square&label=CI"></a>
+  <a href="https://github.com/Fluidiety/fluidity-ts/stargazers"><img alt="stars" src="https://img.shields.io/github/stars/Fluidiety/fluidity-ts?style=flat-square&color=FFD700"></a>
   <a href="./LICENSE"><img alt="license" src="https://img.shields.io/npm/l/fluidity-ts?style=flat-square&color=0F172A"></a>
 </p>
 
