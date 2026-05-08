@@ -79,6 +79,8 @@ Building responsive UIs in 2026 means duct-taping 5+ packages together — a med
 
 ## Quick Start
 
+### React
+
 ```tsx
 // App.tsx
 import { ResponsiveProvider, useBreakpoint, useResponsiveValue, Show } from "fluidity-ts/react";
@@ -111,6 +113,36 @@ export default () => (
     <App />
   </ResponsiveProvider>
 );
+```
+
+### Vue 3
+
+```vue
+<script setup lang="ts">
+import { useBreakpoint } from 'fluidity-ts/vue';
+
+const bp = useBreakpoint();
+</script>
+
+<template>
+  <FullNav v-if="bp.above('desktop')" />
+  <HamburgerMenu v-else />
+</template>
+```
+
+### Svelte
+
+```svelte
+<script>
+  import { breakpoint } from 'fluidity-ts/svelte';
+  const bp = breakpoint();
+</script>
+
+{#if $bp === 'desktop'}
+  <FullNav />
+{:else}
+  <HamburgerMenu />
+{/if}
 ```
 
 <p align="center"><sub>──────────── ✦ ────────────</sub></p>
@@ -195,6 +227,8 @@ fluidity-ts
 │   ├── Show / Hide           declarative breakpoint rendering
 │   └── BreakpointBadge       dev overlay (breakpoint + viewport size)
 │
+├── vue/           ← Vue 3 composables
+├── svelte/        ← Svelte stores
 ├── styles/        ← Pure-string CSS helpers (no DOM, no side effects)
 │   ├── fluidClamp / fluidScale     CSS clamp() generation
 │   ├── containerQuery              @container rule builder
@@ -228,6 +262,8 @@ fluidity-ts
 | :--- | :--- | ---: |
 | `fluidity-ts` | Vanilla core — breakpoints, media, viewport, container, preferences, pointer, DPR, safe-area, store | ~2.4 KB |
 | `fluidity-ts/react` | React hooks + components — everything above, reactive | ~3.3 KB |
+| `fluidity-ts/vue` | Vue 3 composables | — |
+| `fluidity-ts/svelte` | Svelte stores | — |
 | `fluidity-ts/styles` | CSS helpers — fluidClamp, containerQuery, responsiveStyle, safeArea, print, a11y | ~1.3 KB |
 | `fluidity-ts/server` | Server resolver — Client Hints + UA → breakpoint + width | ~0.8 KB |
 | `fluidity-ts/testing` | Test mocks — matchMedia, ResizeObserver, setWindowSize | — |
@@ -595,6 +631,43 @@ Bundle budgets are enforced in CI via [size-limit](https://github.com/ai/size-li
 | `<Show>` | `component` | Conditional render: `on`, `above`, `below`, `between`, `fallback` |
 | `<Hide>` | `component` | Inverse of `<Show>` |
 | `<BreakpointBadge>` | `component` | Dev overlay — auto-hidden in production |
+
+</details>
+
+<details>
+<summary><strong>Vue 3</strong> — <code>fluidity-ts/vue</code></summary>
+
+| Export | Type | Description |
+| :--- | :---: | :--- |
+| `useBreakpoint()` | `hook` | Returns `{ active, is, above, below, between }` |
+| `useMediaQuery(query, serverDefault?)` | `hook` | SSR-safe reactive media query boolean |
+| `useContainerQuery(elRef, range, serverDefault?)` | `hook` | Boolean — does template ref match width range? |
+| `useContainerSize(elRef, serverDefault?)` | `hook` | `{ width, height }` of the container element |
+| `useColorScheme(options?)` | `hook` | Returns `{ colorScheme, isDark, setColorScheme }` with optional persistence |
+| `usePreference(key, serverDefault?)` | `hook` | `"reduced-motion"` \| `"dark"` \| `"forced-colors"` \| … |
+| `useViewport()` | `hook` | `{ width, height, orientation }` |
+| `useDevicePixelRatio(serverDefault?)` | `hook` | Current DPR (retina = 2, etc.) |
+| `usePointer(serverDefault?)` | `hook` | `{ hover, anyHover, coarse, fine }` |
+| `useSafeArea(serverDefault?)` | `hook` | `{ top, right, bottom, left }` in px |
+| `createFluidityPlugin(options?)` | `plugin` | App plugin — provide `system`, `serverWidth`, `serverHeight` |
+
+</details>
+
+<details>
+<summary><strong>Svelte 5</strong> — <code>fluidity-ts/svelte</code></summary>
+
+| Export | Type | Description |
+| :--- | :---: | :--- |
+| `breakpoint(system?)` | `store` | Active breakpoint store + `.is()`, `.above()`, `.below()`, `.between()` derived stores |
+| `mediaQuery(query, serverDefault?)` | `store` | SSR-safe reactive media query boolean |
+| `containerQuery(el, range, serverDefault?)` | `store` | Boolean — does container match width range? |
+| `containerSize(el, serverDefault?)` | `store` | `{ width, height }` of the container element |
+| `colorScheme(options?)` | `store` | Returns `{ scheme, isDark, set }` with optional persistence |
+| `preference(key, serverDefault?)` | `store` | `"reduced-motion"` \| `"dark"` \| `"forced-colors"` \| … |
+| `viewport()` | `store` | `{ width, height, orientation }` |
+| `devicePixelRatio(serverDefault?)` | `store` | Current DPR (retina = 2, etc.) |
+| `pointer(serverDefault?)` | `store` | `{ hover, anyHover, coarse, fine }` stores |
+| `safeArea(serverDefault?)` | `store` | `{ top, right, bottom, left }` in px |
 
 </details>
 
