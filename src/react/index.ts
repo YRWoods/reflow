@@ -9,5 +9,6 @@ export * from "./useDevicePixelRatio.js";
 export * from "./useSafeArea.js";
 export * from "./useContainerQuery.js";
 export * from "./useDynamicViewport.js";
+export * from "./useColorScheme.js";
 export * from "./Show.js";
 export * from "./BreakpointBadge.js";
