@@ -1,6 +1,6 @@
 {
   "name": "fluidity-ts",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "The complete, SSR-safe, framework-agnostic responsive toolkit for TypeScript: typed breakpoints, fluid clamp, container queries, modern preference media, and a first-class React adapter — zero runtime deps.",
   "keywords": [
     "responsive",
@@ -39,28 +39,64 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
-      "require": { "types": "./dist/index.d.cts", "default": "./dist/index.cjs" }
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     },
     "./react": {
-      "import": { "types": "./dist/react/index.d.ts", "default": "./dist/react/index.js" },
-      "require": { "types": "./dist/react/index.d.cts", "default": "./dist/react/index.cjs" }
+      "import": {
+        "types": "./dist/react/index.d.ts",
+        "default": "./dist/react/index.js"
+      },
+      "require": {
+        "types": "./dist/react/index.d.cts",
+        "default": "./dist/react/index.cjs"
+      }
     },
     "./styles": {
-      "import": { "types": "./dist/styles/index.d.ts", "default": "./dist/styles/index.js" },
-      "require": { "types": "./dist/styles/index.d.cts", "default": "./dist/styles/index.cjs" }
+      "import": {
+        "types": "./dist/styles/index.d.ts",
+        "default": "./dist/styles/index.js"
+      },
+      "require": {
+        "types": "./dist/styles/index.d.cts",
+        "default": "./dist/styles/index.cjs"
+      }
     },
     "./server": {
-      "import": { "types": "./dist/server/index.d.ts", "default": "./dist/server/index.js" },
-      "require": { "types": "./dist/server/index.d.cts", "default": "./dist/server/index.cjs" }
+      "import": {
+        "types": "./dist/server/index.d.ts",
+        "default": "./dist/server/index.js"
+      },
+      "require": {
+        "types": "./dist/server/index.d.cts",
+        "default": "./dist/server/index.cjs"
+      }
     },
     "./testing": {
-      "import": { "types": "./dist/testing/index.d.ts", "default": "./dist/testing/index.js" },
-      "require": { "types": "./dist/testing/index.d.cts", "default": "./dist/testing/index.cjs" }
+      "import": {
+        "types": "./dist/testing/index.d.ts",
+        "default": "./dist/testing/index.js"
+      },
+      "require": {
+        "types": "./dist/testing/index.d.cts",
+        "default": "./dist/testing/index.cjs"
+      }
     },
     "./tailwind": {
-      "import": { "types": "./dist/tailwind/index.d.ts", "default": "./dist/tailwind/index.js" },
-      "require": { "types": "./dist/tailwind/index.d.cts", "default": "./dist/tailwind/index.cjs" }
+      "import": {
+        "types": "./dist/tailwind/index.d.ts",
+        "default": "./dist/tailwind/index.js"
+      },
+      "require": {
+        "types": "./dist/tailwind/index.d.cts",
+        "default": "./dist/tailwind/index.cjs"
+      }
     },
     "./package.json": "./package.json"
   },
@@ -114,10 +150,26 @@
     "vitest": "^2.1.0"
   },
   "size-limit": [
-    { "name": "core (esm, gz)", "path": "dist/index.js", "limit": "3 KB" },
-    { "name": "react adapter (esm, gz)", "path": "dist/react/index.js", "limit": "4 KB" },
-    { "name": "styles (esm, gz)", "path": "dist/styles/index.js", "limit": "2 KB" },
-    { "name": "server (esm, gz)", "path": "dist/server/index.js", "limit": "1.5 KB" }
+    {
+      "name": "core (esm, gz)",
+      "path": "dist/index.js",
+      "limit": "3 KB"
+    },
+    {
+      "name": "react adapter (esm, gz)",
+      "path": "dist/react/index.js",
+      "limit": "4 KB"
+    },
+    {
+      "name": "styles (esm, gz)",
+      "path": "dist/styles/index.js",
+      "limit": "2 KB"
+    },
+    {
+      "name": "server (esm, gz)",
+      "path": "dist/server/index.js",
+      "limit": "1.5 KB"
+    }
   ],
   "publishConfig": {
     "access": "public"
