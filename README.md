@@ -5,33 +5,52 @@
   <img src="./assets/brand/logo.png" alt="fluidity-ts" width="140" height="140">
 </picture>
 
-# fluidity-ts
+<h1>fluidity-ts</h1>
 
-**The complete, SSR-safe, framework-agnostic responsive toolkit for TypeScript.**
+<p><strong>The complete, SSR-safe, framework-agnostic responsive toolkit for TypeScript.</strong></p>
 
-Typed breakpoints · Fluid typography · Container queries · User preferences · Server rendering · Zero dependencies
+<p>
+  Typed breakpoints &nbsp;·&nbsp; Fluid typography &nbsp;·&nbsp; Container queries<br/>
+  User preferences &nbsp;·&nbsp; Server rendering &nbsp;·&nbsp; Zero dependencies
+</p>
 
-<br/>
+<p>
+  <a href="https://www.npmjs.com/package/fluidity-ts"><img alt="npm version" src="https://img.shields.io/npm/v/fluidity-ts?style=flat-square&color=0EA5A5"></a>
+  <a href="https://bundlephobia.com/package/fluidity-ts"><img alt="bundle size" src="https://img.shields.io/bundlephobia/minzip/fluidity-ts?style=flat-square&label=gzip&color=67E8F0"></a>
+  <a href="https://www.npmjs.com/package/fluidity-ts"><img alt="types" src="https://img.shields.io/npm/types/fluidity-ts?style=flat-square&color=3178C6"></a>
+  <a href="https://github.com/fluidiety/fluidity-ts/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/fluidiety/fluidity-ts/ci.yml?style=flat-square&label=CI"></a>
+  <a href="./LICENSE"><img alt="license" src="https://img.shields.io/npm/l/fluidity-ts?style=flat-square&color=0F172A"></a>
+</p>
 
-[![npm version](https://img.shields.io/npm/v/fluidity-ts?style=flat-square&color=0EA5A5)](https://www.npmjs.com/package/fluidity-ts)
-[![bundle size](https://img.shields.io/bundlephobia/minzip/fluidity-ts?style=flat-square&label=gzip&color=67E8F0)](https://bundlephobia.com/package/fluidity-ts)
-[![types](https://img.shields.io/npm/types/fluidity-ts?style=flat-square&color=3178C6)](https://www.npmjs.com/package/fluidity-ts)
-[![CI](https://img.shields.io/github/actions/workflow/status/fluidiety/fluidity-ts/ci.yml?style=flat-square&label=CI)](https://github.com/fluidiety/fluidity-ts/actions/workflows/ci.yml)
-[![license](https://img.shields.io/npm/l/fluidity-ts?style=flat-square&color=0F172A)](./LICENSE)
-
-<br/>
-
-[**Live Demo**](https://fluidiety.github.io/fluidity-ts-demo/)&ensp;·&ensp;[**StackBlitz**](https://stackblitz.com/github/Fluidiety/fluidity-ts-demo)&ensp;·&ensp;[**Contributing**](./CONTRIBUTING.md)
-
-<br/>
+<p>
+  <a href="https://fluidiety.github.io/fluidity-ts-demo/"><strong>Live Demo</strong></a>
+  &nbsp;·&nbsp;
+  <a href="https://stackblitz.com/github/Fluidiety/fluidity-ts-demo"><strong>StackBlitz</strong></a>
+  &nbsp;·&nbsp;
+  <a href="./CONTRIBUTING.md"><strong>Contributing</strong></a>
+</p>
 
 </div>
 
 ```bash
-npm install fluidity-ts          # yarn add / pnpm add work too
+# npm / yarn / pnpm
+npm install fluidity-ts
 ```
 
-<br/>
+<p align="center">
+  <sub>
+    <a href="#the-problem">Problem</a> ·
+    <a href="#quick-start">Quick Start</a> ·
+    <a href="#why-fluidity-ts">Why fluidity-ts?</a> ·
+    <a href="#architecture">Architecture</a> ·
+    <a href="#recipes">Recipes</a> ·
+    <a href="#ssr-integration">SSR</a> ·
+    <a href="#api-reference">API</a> ·
+    <a href="#contributing">Contributing</a>
+  </sub>
+</p>
+
+<p align="center"><sub>──────────── ✦ ────────────</sub></p>
 
 ## The Problem
 
@@ -54,11 +73,12 @@ Building responsive UIs in 2026 means duct-taping 5+ packages together — a med
 | Framework-agnostic core                  |        ❌        |    ❌     |     ❌      |         ❌          |      **✅**     |
 | Actively maintained (2026)               |        ⚠️        |    ⚠️     |     ✅      |    ❌ _(abandoned)_  |      **✅**     |
 
-<br/>
+<p align="center"><sub>──────────── ✦ ────────────</sub></p>
 
 ## Quick Start
 
 ```tsx
+// App.tsx
 import { ResponsiveProvider, useBreakpoint, useResponsiveValue, Show } from "fluidity-ts/react";
 import { fluidClamp } from "fluidity-ts/styles";
 
@@ -91,7 +111,7 @@ export default () => (
 );
 ```
 
-<br/>
+<p align="center"><sub>──────────── ✦ ────────────</sub></p>
 
 ## Why fluidity-ts?
 
@@ -140,11 +160,11 @@ Vanilla core works in Vue, Svelte, Solid, or plain JS. React adapter is opt-in v
 </tr>
 </table>
 
-<br/>
+<p align="center"><sub>──────────── ✦ ────────────</sub></p>
 
 ## Architecture
 
-```
+```text
 fluidity-ts
 ├── core/          ← Framework-agnostic primitives (no React, no DOM assumptions)
 │   ├── breakpoints    createBreakpoints(), defaultBreakpoints, resolve/up/down/between/only
@@ -198,7 +218,7 @@ fluidity-ts
     └── tailwindPreset                 sync breakpoints → Tailwind screens
 ```
 
-<br/>
+<p align="center"><sub>──────────── ✦ ────────────</sub></p>
 
 ## Entry Points
 
@@ -213,15 +233,17 @@ fluidity-ts
 
 All entries are **tree-shakeable** (`sideEffects: false`), ship **ESM + CJS**, and have **full TypeScript declarations**.
 
-<br/>
+<p align="center"><sub>──────────── ✦ ────────────</sub></p>
 
 ## Recipes
 
-### Fluid Typography
+<details open>
+<summary><strong>Fluid Typography</strong></summary>
 
 Replace copy-pasted CSS from utopia.fyi with a typed function:
 
 ```ts
+// styles/typography.ts
 import { fluidClamp, fluidScale } from "fluidity-ts/styles";
 
 // Single value
@@ -236,11 +258,15 @@ const scale = fluidScale(["sm", "base", "lg", "xl", "2xl"], {
 // → { sm: "clamp(...)", base: "clamp(...)", lg: "clamp(...)", ... }
 ```
 
-### Container Queries
+</details>
+
+<details>
+<summary><strong>Container Queries</strong></summary>
 
 No polyfill needed — native `ResizeObserver` under the hood:
 
 ```tsx
+// components/Card.tsx
 import { useRef } from "react";
 import { useContainerQuery, useContainerSize } from "fluidity-ts/react";
 
@@ -258,11 +284,15 @@ function Card() {
 }
 ```
 
-### User Preferences
+</details>
+
+<details>
+<summary><strong>User Preferences</strong></summary>
 
 Respect every user preference — all typed, all SSR-safe:
 
 ```tsx
+// app/App.tsx
 import { usePreference } from "fluidity-ts/react";
 
 function App() {
@@ -280,11 +310,15 @@ function App() {
 }
 ```
 
-### Conditional Rendering
+</details>
+
+<details>
+<summary><strong>Conditional Rendering</strong></summary>
 
 Declarative show/hide based on breakpoints:
 
 ```tsx
+// components/navigation.tsx
 import { Show, Hide } from "fluidity-ts/react";
 
 <Show above="md">
@@ -304,22 +338,30 @@ import { Show, Hide } from "fluidity-ts/react";
 </Hide>
 ```
 
-### Dev Overlay
+</details>
+
+<details>
+<summary><strong>Dev Overlay</strong></summary>
 
 Drop a breakpoint badge in your app during development:
 
 ```tsx
+// app/devtools.tsx
 import { BreakpointBadge } from "fluidity-ts/react";
 
 // Shows "md · 768×1024" in the corner — auto-hidden in production
 <BreakpointBadge position="bottom-right" />
 ```
 
-### Custom Breakpoints
+</details>
+
+<details>
+<summary><strong>Custom Breakpoints</strong></summary>
 
 Define your own breakpoint system with full type inference:
 
 ```ts
+// breakpoints.ts
 import { createBreakpoints } from "fluidity-ts";
 
 const bp = createBreakpoints({
@@ -334,7 +376,10 @@ bp.up("desktop");             // → "(min-width: 1024px)"
 bp.between("tablet", "wide"); // → "(min-width: 600px) and (max-width: 1439.98px)"
 ```
 
-### Tailwind Integration
+</details>
+
+<details>
+<summary><strong>Tailwind Integration</strong></summary>
 
 Share breakpoints between fluidity-ts and Tailwind CSS:
 
@@ -348,11 +393,15 @@ export default {
 };
 ```
 
-### Vanilla JS / Vue / Svelte / Solid
+</details>
+
+<details>
+<summary><strong>Vanilla JS / Vue / Svelte / Solid</strong></summary>
 
 The core works everywhere — no React required:
 
 ```ts
+// responsive.ts
 import { createBreakpoints, observeViewport, watchMedia, observePreference } from "fluidity-ts";
 
 const bp = createBreakpoints({ sm: 640, md: 768, lg: 1024 } as const);
@@ -372,11 +421,14 @@ observePreference("reducedMotion", (on) => {
 });
 ```
 
-<br/>
+</details>
+
+<p align="center"><sub>──────────── ✦ ────────────</sub></p>
 
 ## SSR Integration
 
-### Next.js App Router
+<details open>
+<summary><strong>Next.js App Router</strong></summary>
 
 ```tsx
 // app/layout.tsx
@@ -415,9 +467,13 @@ export default {
 };
 ```
 
-### Express / Hono / Any Server
+</details>
+
+<details>
+<summary><strong>Express / Hono / Any Server</strong></summary>
 
 ```ts
+// server.ts
 import { resolveServerBreakpoint, clientHintsResponseHeaders } from "fluidity-ts/server";
 
 // Add Client Hints headers to responses
@@ -435,7 +491,9 @@ app.get("/", (req, res) => {
 });
 ```
 
-<br/>
+</details>
+
+<p align="center"><sub>──────────── ✦ ────────────</sub></p>
 
 ## Testing
 
@@ -458,7 +516,7 @@ matchMedia.set("(prefers-color-scheme: dark)", true);
 resizeObserver.resize(myElement, { width: 500, height: 300 });
 ```
 
-<br/>
+<p align="center"><sub>──────────── ✦ ────────────</sub></p>
 
 ## Browser Support
 
@@ -471,7 +529,7 @@ resizeObserver.resize(myElement, { width: 500, height: 300 });
 **Container queries:** Safari 16+, Chromium 105+, Firefox 110+.
 **`prefers-reduced-data`:** Chromium-only — gracefully returns `false` elsewhere.
 
-<br/>
+<p align="center"><sub>──────────── ✦ ────────────</sub></p>
 
 ## Bundle Size
 
@@ -485,7 +543,7 @@ resizeObserver.resize(myElement, { width: 500, height: 300 });
 
 Bundle budgets are enforced in CI via [size-limit](https://github.com/ai/size-limit). Every PR that exceeds the budget fails.
 
-<br/>
+<p align="center"><sub>──────────── ✦ ────────────</sub></p>
 
 ## API Reference
 
@@ -593,13 +651,18 @@ Bundle budgets are enforced in CI via [size-limit](https://github.com/ai/size-li
 
 </details>
 
-<br/>
+<p align="center"><sub>──────────── ✦ ────────────</sub></p>
 
 ## Contributing
+
+<div align="center">
+  <sub>Help shape the most polished responsive toolkit in the TypeScript ecosystem.</sub>
+</div>
 
 We'd love your help. Check out [**CONTRIBUTING.md**](./CONTRIBUTING.md) for the full guide.
 
 ```bash
+# local development
 git clone https://github.com/fluidiety/fluidity-ts && cd fluidity-ts
 npm install
 npm run verify   # typecheck + lint + test + build + publint + attw + size
@@ -607,16 +670,22 @@ npm run verify   # typecheck + lint + test + build + publint + attw + size
 
 Look for [`good first issue`](https://github.com/fluidiety/fluidity-ts/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) to get started. We follow the [Contributor Covenant](./CODE_OF_CONDUCT.md).
 
-<br/>
+<p align="center"><sub>──────────── ✦ ────────────</sub></p>
 
 ## License
 
-[MIT](./LICENSE) © [Tamish Mhatre](https://github.com/tamishmhatre) and [fluidity-ts contributors](https://github.com/fluidiety/fluidity-ts/graphs/contributors).
-
----
-
 <div align="center">
 
-**If fluidity-ts saves you time, consider giving it a ⭐**
+[MIT](./LICENSE) © [Tamish Mhatre](https://github.com/tamishmhatre) and [fluidity-ts contributors](https://github.com/fluidiety/fluidity-ts/graphs/contributors).
+
+<br/>
+
+<strong>If fluidity-ts saves you time, consider giving it a ⭐</strong>
+
+<br/>
+
+<sub>
+  Built for SSR-safe UI systems &mdash; and polished for teams that care about first impressions.
+</sub>
 
 </div>
