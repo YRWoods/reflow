@@ -1,0 +1,260 @@
+:root {
+  color-scheme: light dark;
+  --bg: #f4f7fb;
+  --bg-accent: rgba(37, 99, 235, 0.12);
+  --surface: rgba(255, 255, 255, 0.78);
+  --surface-strong: rgba(255, 255, 255, 0.92);
+  --text: #0f172a;
+  --muted: #52607a;
+  --border: rgba(15, 23, 42, 0.1);
+  --accent: #2563eb;
+  --accent-strong: #1d4ed8;
+  --shadow: 0 24px 80px rgba(15, 23, 42, 0.12);
+}
+
+:root[data-theme="dark"] {
+  --bg: #07111f;
+  --bg-accent: rgba(56, 189, 248, 0.16);
+  --surface: rgba(15, 23, 42, 0.82);
+  --surface-strong: rgba(15, 23, 42, 0.94);
+  --text: #e5eefb;
+  --muted: #9db0cb;
+  --border: rgba(148, 163, 184, 0.22);
+  --accent: #60a5fa;
+  --accent-strong: #93c5fd;
+  --shadow: 0 24px 80px rgba(2, 6, 23, 0.45);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background:
+    radial-gradient(circle at top left, var(--bg-accent), transparent 32%),
+    radial-gradient(circle at top right, rgba(99, 102, 241, 0.08), transparent 24%),
+    var(--bg);
+  color: var(--text);
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+code,
+pre {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+.page-shell {
+  display: grid;
+  gap: 1.5rem;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.hero {
+  display: grid;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.hero-copy,
+.section,
+.panel {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--shadow);
+}
+
+.hero-copy,
+.section {
+  border-radius: 28px;
+  padding: 1.5rem;
+}
+
+.panel {
+  border-radius: 24px;
+  padding: 1.25rem;
+}
+
+.panel--highlight {
+  background: linear-gradient(180deg, var(--surface-strong), var(--surface));
+}
+
+.eyebrow,
+.section-label,
+.panel-label,
+.card-tag,
+.mini-label {
+  display: inline-flex;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-strong);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.hero h1,
+.section h2,
+.panel h2,
+.card h3,
+.flow-card h3 {
+  margin: 0;
+}
+
+.lede,
+.card p,
+.flow-card p {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.hero-copy {
+  display: grid;
+  gap: 1rem;
+}
+
+.hero-actions,
+.section-heading,
+.panel-header {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.theme-toggle,
+.scheme-chip,
+.badge {
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.theme-toggle {
+  border: 1px solid transparent;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: white;
+  cursor: pointer;
+  padding: 0.8rem 1.1rem;
+}
+
+.theme-toggle:hover {
+  opacity: 0.94;
+}
+
+.scheme-chip,
+.badge {
+  border: 1px solid var(--border);
+  background: var(--surface-strong);
+  padding: 0.55rem 0.9rem;
+}
+
+.stats-grid,
+.mini-grid,
+.flow-grid,
+.card-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.stats-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 1rem 0 0;
+}
+
+.stat-card,
+.mini-card {
+  border: 1px solid var(--border);
+  background: var(--surface-strong);
+  border-radius: 18px;
+  padding: 1rem;
+}
+
+.stat-card dt {
+  color: var(--muted);
+  margin-bottom: 0.45rem;
+}
+
+.stat-card dd {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.mini-card {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.mini-card strong {
+  font-size: 1.1rem;
+}
+
+.flow-grid {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.card-grid {
+  align-items: stretch;
+}
+
+.card {
+  display: grid;
+  gap: 0.85rem;
+  min-height: 190px;
+}
+
+.card-tag {
+  width: fit-content;
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.12);
+}
+
+.code-block {
+  overflow-x: auto;
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  background: #020617;
+  color: #dbeafe;
+  padding: 1rem 1.2rem;
+  line-height: 1.7;
+}
+
+@media (min-width: 980px) {
+  .hero {
+    grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .hero-copy,
+  .section,
+  .panel {
+    border-radius: 22px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
