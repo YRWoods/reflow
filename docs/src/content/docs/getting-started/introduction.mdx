@@ -1,0 +1,70 @@
+---
+title: Introduction
+description: What fluidity-ts is, why it exists, and what comes in the box.
+---
+
+# Introduction
+
+`fluidity-ts` is an SSR-safe responsive toolkit for TypeScript. It combines typed breakpoints, media-query helpers, fluid typography, container-query utilities, preference detection, server-side breakpoint resolution, and framework adapters in one package.
+
+## Why it exists
+
+Responsive UI work usually means combining a media-query hook, viewport listener, fluid type helper, container-query utility, and a pile of SSR guards. That stack is repetitive, inconsistent, and easy to break during hydration.
+
+`fluidity-ts` solves that by making responsive state a first-class, typed API.
+
+## The “5 packages in 1” pitch
+
+You can think of fluidity-ts as these tools bundled behind one API:
+
+1. **Typed breakpoint system** — `createBreakpoints()`, `resolveResponsive()`, `useBreakpoint()`.
+2. **Media and preference toolkit** — `watchMedia()`, `mq`, `useMediaQuery()`, `usePreference()`.
+3. **Layout and sizing helpers** — `fluidClamp()`, `fluidScale()`, `containerQuery()`, `defineContainer()`.
+4. **SSR layer** — `resolveBreakpointFromHints()`, `resolveServerBreakpoint()`, `ResponsiveProvider`.
+5. **Framework adapters** — React hooks, Vue composables, Svelte stores, plus testing and Tailwind helpers.
+
+## Key features
+
+- **SSR-safe React hooks** powered by `useSyncExternalStore`.
+- **Literal type inference** from your custom breakpoint map.
+- **Modern media support** for color scheme, reduced motion, reduced data, contrast, pointer, print, retina, and foldables.
+- **Native container-query helpers** for both CSS and JS.
+- **Framework-agnostic core** with optional adapters for React, Vue 3, and Svelte.
+- **Zero runtime dependencies** in the published library.
+
+## Feature comparison
+
+| Capability | react-responsive | react-use | usehooks-ts | react-device-detect | fluidity-ts |
+| :-- | :--: | :--: | :--: | :--: | :--: |
+| SSR-safe (zero hydration warnings) | ❌ | ⚠️ | ❌ | ❌ | ✅ |
+| Typed breakpoint inference | ❌ | ❌ | ❌ | ❌ | ✅ |
+| Runtime `fluidClamp()` / fluid scale | ❌ | ❌ | ❌ | ❌ | ✅ |
+| Container queries | ❌ | ❌ | ❌ | ❌ | ✅ |
+| `prefers-reduced-data` / `forced-colors` | ❌ | ❌ | ❌ | ❌ | ✅ |
+| Client Hints / SSR breakpoint resolver | ❌ | ❌ | ❌ | ❌ | ✅ |
+| Framework-agnostic core | ❌ | ❌ | ❌ | ❌ | ✅ |
+| Actively maintained | ⚠️ | ⚠️ | ✅ | ❌ | ✅ |
+
+## Architecture at a glance
+
+```ts
+import { createBreakpoints, mq, watchMedia } from "fluidity-ts";
+import { fluidClamp } from "fluidity-ts/styles";
+import { useBreakpoint } from "fluidity-ts/react";
+import { resolveServerBreakpoint } from "fluidity-ts/server";
+```
+
+- `fluidity-ts` → framework-agnostic responsive primitives.
+- `fluidity-ts/react` → React hooks and components.
+- `fluidity-ts/vue` → Vue 3 composables.
+- `fluidity-ts/svelte` → Svelte stores.
+- `fluidity-ts/styles` → CSS string helpers.
+- `fluidity-ts/server` → SSR and Client Hints helpers.
+- `fluidity-ts/testing` / `fluidity-ts/tailwind` → ecosystem integrations.
+
+## Next steps
+
+- Go to [Installation](/getting-started/installation/).
+- Build a working app with [Quick Start](/getting-started/quick-start/).
+- Learn the core APIs in [Breakpoints](/core/breakpoints/) and [Media Queries](/core/media-queries/).
+

@@ -1,0 +1,105 @@
+---
+title: Next.js
+description: Configure Client Hints and server breakpoints in a Next.js App Router app.
+---
+
+# Next.js
+
+A typical App Router setup has three pieces:
+
+1. a shared breakpoint file,
+2. middleware that opt-ins to Client Hints, and
+3. a root layout that resolves `serverWidth` before rendering.
+
+## Shared breakpoints
+
+```ts
+// lib/responsive.ts
+import { createBreakpoints } from "fluidity-ts";
+
+export const breakpoints = {
+  mobile: 0,
+  tablet: 768,
+  laptop: 1024,
+  desktop: 1280,
+} as const;
+
+export type AppBreakpoints = typeof breakpoints;
+export const system = createBreakpoints(breakpoints);
+```
+
+## `middleware.ts`
+
+```ts
+// middleware.ts
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
+import { clientHintsResponseHeaders } from "fluidity-ts/server";
+
+export function middleware(_request: NextRequest) {
+  const response = NextResponse.next();
+
+  for (const [key, value] of Object.entries(clientHintsResponseHeaders)) {
+    response.headers.set(key, value);
+  }
+
+  return response;
+}
+
+export const config = {
+  matcher: "/:path*",
+};
+```
+
+## `app/layout.tsx`
+
+```tsx
+// app/layout.tsx
+import type { ReactNode } from "react";
+import { headers } from "next/headers";
+import { ResponsiveProvider } from "fluidity-ts/react";
+import { resolveServerBreakpoint } from "fluidity-ts/server";
+import { system } from "../lib/responsive";
+
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  const requestHeaders = await headers();
+  const resolved = resolveServerBreakpoint(
+    {
+      headers: requestHeaders,
+      userAgent: requestHeaders.get("user-agent") ?? undefined,
+    },
+    system,
+  );
+
+  const serverWidth = resolved?.width ?? 1024;
+
+  return (
+    <html lang="en">
+      <body>
+        <ResponsiveProvider system={system} serverWidth={serverWidth}>
+          {children}
+        </ResponsiveProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+## Using the result in a component
+
+```tsx
+import { useBreakpoint } from "fluidity-ts/react";
+import type { AppBreakpoints } from "../lib/responsive";
+
+export function Shell() {
+  const bp = useBreakpoint<AppBreakpoints>();
+  return bp.above("laptop") ? <DesktopShell /> : <MobileShell />;
+}
+```
+
+## Notes
+
+- Client Hints usually arrive after the browser has seen your opt-in headers once.
+- `resolveServerBreakpoint()` falls back to user-agent heuristics when width hints are missing.
+- Always share the same `system` between the server helper and `ResponsiveProvider`.
+

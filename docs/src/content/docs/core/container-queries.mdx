@@ -1,0 +1,104 @@
+---
+title: Container Queries
+description: Generate native container-query CSS and observe containers in JavaScript.
+---
+
+# Container Queries
+
+fluidity-ts gives you both sides of container queries:
+
+- **CSS builders**: `containerQuery()` and `defineContainer()`.
+- **JavaScript observers**: `observeContainer()`, `useContainerQuery()`, and `useContainerSize()`.
+
+## CSS helpers
+
+```ts
+import { containerQuery, defineContainer } from "fluidity-ts/styles";
+
+const containerStyles = defineContainer("card");
+// "container-type: inline-size; container-name: card;"
+
+const wideCard = containerQuery({ name: "card", minPx: 480 });
+// "@container card (min-width: 480px)"
+```
+
+### Example with CSS-in-JS
+
+```ts
+import { containerQuery, defineContainer } from "fluidity-ts/styles";
+
+const cardCss = `
+  .card { ${defineContainer("card")} }
+  ${containerQuery({ name: "card", minPx: 480 })} {
+    .card__body { display: grid; grid-template-columns: 1fr 2fr; }
+  }
+`;
+```
+
+## Core observation API
+
+```ts
+import { getContainerSize, matchesContainerRange, observeContainer } from "fluidity-ts";
+
+const card = document.querySelector(".card")!;
+console.log(getContainerSize(card));
+
+const stop = observeContainer(card, (size) => {
+  const isWide = matchesContainerRange(size, { minPx: 480 });
+  console.log(size.width, isWide);
+});
+
+stop();
+```
+
+## React hook
+
+```tsx
+import { useRef } from "react";
+import { useContainerQuery, useContainerSize } from "fluidity-ts/react";
+
+export function ProductCard() {
+  const ref = useRef<HTMLDivElement>(null);
+  const isWide = useContainerQuery(ref, { minPx: 480 });
+  const size = useContainerSize(ref);
+
+  return (
+    <article ref={ref}>
+      <p>{isWide ? "horizontal" : "stacked"}</p>
+      <small>{size.width} × {size.height}</small>
+    </article>
+  );
+}
+```
+
+## Vue composable
+
+```ts
+import { ref } from "vue";
+import { useContainerQuery } from "fluidity-ts/vue";
+
+const card = ref<HTMLElement | null>(null);
+const isWide = useContainerQuery(card, { minPx: 480 });
+```
+
+## Svelte store
+
+```svelte
+<script lang="ts">
+  import { containerQuery } from "fluidity-ts/svelte";
+
+  let card: HTMLDivElement;
+  $: wideCard = card ? containerQuery(card, { minPx: 480 }) : null;
+</script>
+
+<div bind:this={card}>
+  {#if wideCard && $wideCard}
+    <p>Wide layout</p>
+  {/if}
+</div>
+```
+
+## Why both CSS and JS?
+
+Native CSS `@container` rules are best for styling. JS observation is useful when rendering different component trees, measuring space, or coordinating canvas/media behavior.
+

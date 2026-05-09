@@ -1,0 +1,132 @@
+---
+title: Vue
+description: Vue 3 composables and plugin-based responsive state.
+---
+
+# Vue
+
+The Vue adapter mirrors the React adapter, but exposes refs and composables instead of hooks.
+
+## Plugin setup
+
+The recommended setup is `createFluidityPlugin()`, which uses Vue's provide/inject mechanism under the hood.
+
+```ts
+// main.ts
+import { createApp } from "vue";
+import { createBreakpoints } from "fluidity-ts";
+import { createFluidityPlugin } from "fluidity-ts/vue";
+import App from "./App.vue";
+
+const breakpoints = {
+  mobile: 0,
+  tablet: 768,
+  laptop: 1024,
+  desktop: 1280,
+} as const;
+
+const app = createApp(App);
+app.use(
+  createFluidityPlugin({
+    system: createBreakpoints(breakpoints),
+    serverWidth: 1024,
+    serverHeight: 768,
+  }),
+);
+app.mount("#app");
+```
+
+## Breakpoints
+
+```vue
+<script setup lang="ts">
+import { useBreakpoint } from "fluidity-ts/vue";
+
+type AppBreakpoints = {
+  mobile: 0;
+  tablet: 768;
+  laptop: 1024;
+  desktop: 1280;
+};
+
+const bp = useBreakpoint<AppBreakpoints>();
+</script>
+
+<template>
+  <p>Current breakpoint: {{ bp.active.value }}</p>
+  <DesktopNav v-if="bp.above('laptop')" />
+  <MobileNav v-else />
+</template>
+```
+
+## Core composables
+
+```ts
+import {
+  useBreakpoint,
+  useColorScheme,
+  useContainerQuery,
+  useDevicePixelRatio,
+  useMediaQuery,
+  usePointer,
+  usePreference,
+  useSafeArea,
+  useViewport,
+} from "fluidity-ts/vue";
+```
+
+### `useMediaQuery()` and `usePreference()`
+
+```ts
+const dark = useMediaQuery("(prefers-color-scheme: dark)");
+const reducedMotion = usePreference("reducedMotion");
+```
+
+### `useViewport()`
+
+```ts
+const viewport = useViewport();
+viewport.width.value;
+viewport.height.value;
+viewport.orientation.value;
+```
+
+### `useColorScheme()`
+
+```ts
+const theme = useColorScheme({ storageKey: "theme" });
+theme.colorScheme.value;
+theme.isDark.value;
+theme.setColorScheme("dark");
+```
+
+### `useContainerQuery()`
+
+```vue
+<script setup lang="ts">
+import { ref } from "vue";
+import { useContainerQuery, useContainerSize } from "fluidity-ts/vue";
+
+const card = ref<HTMLElement | null>(null);
+const wide = useContainerQuery(card, { minPx: 480 });
+const size = useContainerSize(card);
+</script>
+
+<template>
+  <article ref="card">
+    <p>{{ wide.value ? 'wide' : 'stacked' }}</p>
+    <small>{{ size.width.value }} × {{ size.height.value }}</small>
+  </article>
+</template>
+```
+
+### Pointer, DPR, and safe area
+
+```ts
+const pointer = usePointer();
+const dpr = useDevicePixelRatio();
+const insets = useSafeArea();
+```
+
+The Vue composables can also run without the plugin, but they will fall back to an ambient default store. Use the plugin when you want custom breakpoints or SSR width hints.
+

@@ -1,0 +1,193 @@
+---
+title: React
+description: React hooks, components, provider setup, and responsive rendering patterns.
+---
+
+# React
+
+The React adapter is built around one shared store and `useSyncExternalStore`, so the same hooks work in CSR, SSR, and concurrent rendering.
+
+## Provider setup
+
+`ResponsiveProvider` is optional in purely client-rendered apps, but recommended whenever you need SSR or custom breakpoints.
+
+```tsx
+import { createBreakpoints } from "fluidity-ts";
+import { ResponsiveProvider } from "fluidity-ts/react";
+
+const breakpoints = {
+  mobile: 0,
+  tablet: 768,
+  laptop: 1024,
+  desktop: 1280,
+} as const;
+
+export type AppBreakpoints = typeof breakpoints;
+export const system = createBreakpoints(breakpoints);
+
+export function Providers({ children }: { children: React.ReactNode }) {
+  return (
+    <ResponsiveProvider system={system} serverWidth={1024} serverHeight={768}>
+      {children}
+    </ResponsiveProvider>
+  );
+}
+```
+
+## Breakpoints and responsive values
+
+```tsx
+import { Show, useBreakpoint, useResponsiveValue } from "fluidity-ts/react";
+import type { AppBreakpoints } from "../responsive";
+
+export function Navigation() {
+  const bp = useBreakpoint<AppBreakpoints>();
+  const columns = useResponsiveValue<number, AppBreakpoints>({ mobile: 1, tablet: 2, desktop: 4 });
+
+  return (
+    <>
+      <p>Active: {bp.active}</p>
+      <p>Columns: {columns}</p>
+
+      <Show<AppBreakpoints> above="laptop">
+        <DesktopNav />
+      </Show>
+      <Show<AppBreakpoints> below="laptop" fallback={<DesktopNav />}>
+        <MobileNav />
+      </Show>
+    </>
+  );
+}
+```
+
+## Full API overview
+
+```tsx
+import {
+  BreakpointBadge,
+  Hide,
+  ResponsiveProvider,
+  Show,
+  useBreakpoint,
+  useColorScheme,
+  useContainerQuery,
+  useDevicePixelRatio,
+  useDynamicViewport,
+  useMediaQuery,
+  usePointer,
+  usePreference,
+  useResponsiveValue,
+  useSafeArea,
+  useViewport,
+} from "fluidity-ts/react";
+```
+
+### `useBreakpoint()`
+
+Returns `{ active, is, above, below, between }`.
+
+### `useMediaQuery(query, serverDefault?)`
+
+```tsx
+const prefersLandscape = useMediaQuery("(orientation: landscape)", false);
+```
+
+### `useViewport()`
+
+```tsx
+const viewport = useViewport();
+viewport.width;
+viewport.height;
+viewport.orientation;
+```
+
+### `useColorScheme(options?)`
+
+```tsx
+const { colorScheme, isDark, setColorScheme } = useColorScheme({
+  serverDefault: "light",
+  storageKey: "theme",
+});
+```
+
+### `useContainerQuery(ref, range, serverDefault?)`
+
+```tsx
+import { useRef } from "react";
+
+const ref = useRef<HTMLDivElement>(null);
+const stacked = useContainerQuery(ref, { maxPx: 480 });
+```
+
+### `usePreference(key, serverDefault?)`
+
+```tsx
+const reducedMotion = usePreference("reducedMotion");
+const dark = usePreference("dark");
+```
+
+### `usePointer(serverDefault?)`
+
+```tsx
+const pointer = usePointer();
+pointer.hover;
+pointer.anyHover;
+pointer.coarse;
+pointer.fine;
+```
+
+### `useDevicePixelRatio(serverDefault?)`
+
+```tsx
+const dpr = useDevicePixelRatio();
+const isRetina = dpr >= 2;
+```
+
+### `useSafeArea(serverDefault?)`
+
+```tsx
+const insets = useSafeArea();
+```
+
+### `useDynamicViewport(serverDefault?)`
+
+```tsx
+const { dvh, svh, lvh } = useDynamicViewport();
+```
+
+## `Show` and `Hide`
+
+```tsx
+import { Hide, Show } from "fluidity-ts/react";
+
+<Show<AppBreakpoints> between={["tablet", "desktop"]}>
+  <TabletOnlyChart />
+</Show>
+
+<Hide<AppBreakpoints> above="desktop">
+  <CompactToolbar />
+</Hide>
+```
+
+## `BreakpointBadge`
+
+```tsx
+import { BreakpointBadge } from "fluidity-ts/react";
+
+export function DevTools() {
+  return <BreakpointBadge position="bottom-right" />;
+}
+```
+
+The badge is hidden automatically when `process.env.NODE_ENV === "production"` unless you set `devOnly={false}`.
+
+## Conditional values with `useResponsiveValue()`
+
+```tsx
+const gap = useResponsiveValue<number, AppBreakpoints>({
+  mobile: 12,
+  tablet: 20,
+  desktop: 32,
+}) ?? 12;
+```
+

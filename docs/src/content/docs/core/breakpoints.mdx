@@ -1,0 +1,117 @@
+---
+title: Breakpoints
+description: Create typed breakpoint systems and resolve values against viewport width.
+---
+
+# Breakpoints
+
+`createBreakpoints()` is the center of the library. You pass a map of names to minimum widths and get a typed system back.
+
+```ts
+import { createBreakpoints } from "fluidity-ts";
+
+const breakpoints = {
+  mobile: 0,
+  tablet: 768,
+  laptop: 1024,
+  desktop: 1280,
+} as const;
+
+const system = createBreakpoints(breakpoints);
+```
+
+## Returned API
+
+```ts
+system.resolve(900);              // "tablet"
+system.up("laptop");            // "(min-width: 1024px)"
+system.down("laptop");          // "(max-width: 1023.98px)"
+system.between("tablet", "desktop");
+system.only("tablet");
+```
+
+## Full TypeScript example
+
+```ts
+import { createBreakpoints, resolveResponsive } from "fluidity-ts";
+
+const breakpoints = {
+  mobile: 0,
+  tablet: 768,
+  laptop: 1024,
+  desktop: 1440,
+} as const;
+
+type AppBreakpoints = typeof breakpoints;
+const system = createBreakpoints(breakpoints);
+
+const gutter = resolveResponsive<number, AppBreakpoints>(
+  system,
+  { mobile: 16, tablet: 24, desktop: 40 },
+  1200,
+);
+
+console.log(system.resolve(1200)); // "laptop"
+console.log(gutter);               // 24
+```
+
+## Hook helpers in React
+
+`createBreakpoints()` gives you the underlying system. In React, `useBreakpoint()` exposes ergonomic helpers built on the same ordering:
+
+```tsx
+import { useBreakpoint } from "fluidity-ts/react";
+
+type AppBreakpoints = {
+  mobile: 0;
+  tablet: 768;
+  laptop: 1024;
+  desktop: 1280;
+};
+
+function Layout() {
+  const bp = useBreakpoint<AppBreakpoints>();
+
+  bp.is("tablet");
+  bp.above("laptop");
+  bp.below("desktop");
+  bp.between("tablet", "desktop");
+
+  return <span>{bp.active}</span>;
+}
+```
+
+## Custom breakpoint maps
+
+You are not locked into `xs`/`sm`/`md` names.
+
+```ts
+const editorial = createBreakpoints({
+  phone: 0,
+  reading: 720,
+  layout: 1100,
+  wide: 1500,
+} as const);
+
+editorial.resolve(800); // "reading"
+```
+
+## Type inference
+
+Because the input map is declared `as const`, TypeScript keeps the literal keys. That means:
+
+- `system.up()` only accepts valid breakpoint names.
+- `useBreakpoint<AppBreakpoints>()` returns a typed `active` key.
+- `useResponsiveValue<number, AppBreakpoints>()` only accepts known keys.
+
+## Default breakpoints
+
+`fluidity-ts` also exports `defaultBreakpoints` and `defaultSystem`:
+
+```ts
+import { defaultBreakpoints, defaultSystem } from "fluidity-ts";
+
+defaultBreakpoints; // { xs: 0, sm: 640, md: 768, lg: 1024, xl: 1280, "2xl": 1536 }
+defaultSystem.resolve(1280); // "xl"
+```
+

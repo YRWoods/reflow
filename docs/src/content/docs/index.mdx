@@ -1,0 +1,44 @@
+---
+title: fluidity-ts
+description: The complete, SSR-safe responsive toolkit for TypeScript.
+template: splash
+hero:
+  tagline: Typed breakpoints, fluid typography, container queries, preferences, SSR helpers, and framework adapters in one library.
+  actions:
+    - text: Read the introduction
+      link: /getting-started/introduction/
+      icon: right-arrow
+    - text: Jump to quick start
+      link: /getting-started/quick-start/
+      icon: right-arrow
+    - text: View on GitHub
+      link: https://github.com/Fluidiety/fluidity-ts
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<CardGrid stagger>
+  <Card title="Getting started" icon="pencil">
+    Learn the problem fluidity-ts solves, install the package, and ship a working responsive app in minutes.
+  </Card>
+  <Card title="Core APIs" icon="document">
+    Breakpoints, media queries, fluid type, container queries, preferences, and SSR-safe primitives.
+  </Card>
+  <Card title="Framework adapters" icon="open-book">
+    React hooks, Vue composables, Svelte stores, and a framework-agnostic core for any TypeScript app.
+  </Card>
+  <Card title="Production integrations" icon="setting">
+    Tailwind syncing, test utilities, Client Hints, and Next.js setup.
+  </Card>
+</CardGrid>
+
+## Why fluidity-ts?
+
+Responsive code usually means stitching together a media query hook, viewport listener, typography calculator, container helper, and SSR workaround. fluidity-ts replaces that pile with one typed toolkit.
+
+- **SSR-safe by default** with `useSyncExternalStore`-powered React hooks and server breakpoint helpers.
+- **Typed everywhere** from `createBreakpoints()` to `<Show />` and `useResponsiveValue()`.
+- **Framework-agnostic** core with optional React, Vue, and Svelte adapters.
+- **Modern CSS support** for `clamp()`, container queries, safe-area insets, and dynamic viewport units.

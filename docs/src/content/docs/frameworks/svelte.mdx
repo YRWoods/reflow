@@ -1,0 +1,99 @@
+---
+title: Svelte
+description: Svelte stores for breakpoints, media queries, preferences, and layout state.
+---
+
+# Svelte
+
+The Svelte adapter exposes readable stores. That makes the API fit naturally into `$store` syntax and reactive declarations.
+
+## Breakpoint store
+
+```svelte
+<script lang="ts">
+  import { breakpoint } from "fluidity-ts/svelte";
+  import { createBreakpoints } from "fluidity-ts";
+
+  const system = createBreakpoints({ mobile: 0, tablet: 768, desktop: 1024 } as const);
+  const bp = breakpoint(system);
+  const desktopUp = bp.above("desktop");
+</script>
+
+<p>Active breakpoint: {$bp.active}</p>
+{#if $desktopUp}
+  <DesktopNav />
+{:else}
+  <MobileNav />
+{/if}
+```
+
+## Media, viewport, and preferences
+
+```svelte
+<script lang="ts">
+  import { mediaQuery, preference, viewport } from "fluidity-ts/svelte";
+
+  const dark = mediaQuery("(prefers-color-scheme: dark)");
+  const reducedMotion = preference("reducedMotion");
+  const vp = viewport();
+</script>
+
+<p>{$vp.width} × {$vp.height}</p>
+<p>{$dark ? 'dark' : 'light'}</p>
+<p>{$reducedMotion ? 'reduced' : 'full'} motion</p>
+```
+
+## Container query store
+
+```svelte
+<script lang="ts">
+  import { containerQuery, containerSize } from "fluidity-ts/svelte";
+
+  let card: HTMLDivElement;
+  $: wide = card ? containerQuery(card, { minPx: 480 }) : null;
+  $: size = card ? containerSize(card) : null;
+</script>
+
+<div bind:this={card}>
+  {#if wide && $wide}
+    <WideCard />
+  {:else}
+    <StackedCard />
+  {/if}
+
+  {#if size}
+    <small>{$size.width} × {$size.height}</small>
+  {/if}
+</div>
+```
+
+## Color scheme store
+
+```svelte
+<script lang="ts">
+  import { colorScheme } from "fluidity-ts/svelte";
+
+  const theme = colorScheme({ storageKey: "theme" });
+</script>
+
+<button on:click={() => theme.set($theme.isDark ? 'light' : 'dark')}>
+  {$theme.scheme}
+</button>
+```
+
+## Pointer, DPR, and safe area
+
+```svelte
+<script lang="ts">
+  import { devicePixelRatio, pointer, safeArea } from "fluidity-ts/svelte";
+
+  const dpr = devicePixelRatio();
+  const capabilities = pointer();
+  const insets = safeArea();
+</script>
+
+<p>DPR: {$dpr}</p>
+<p>Hover: {$capabilities.hover ? 'yes' : 'no'}</p>
+<p>Top inset: {$insets.top}px</p>
+```
+

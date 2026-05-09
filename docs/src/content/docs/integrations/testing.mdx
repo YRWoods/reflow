@@ -1,0 +1,91 @@
+---
+title: Testing
+description: Mock matchMedia, ResizeObserver, and viewport size in Vitest or Jest.
+---
+
+# Testing
+
+`fluidity-ts/testing` ships helpers for DOM test environments like Vitest + happy-dom, jsdom, or Jest.
+
+## Install the mocks
+
+```ts
+// vitest.setup.ts
+import {
+  installMatchMediaMock,
+  installResizeObserverMock,
+  setWindowSize,
+} from "fluidity-ts/testing";
+
+export const matchMedia = installMatchMediaMock();
+export const resizeObserver = installResizeObserverMock();
+
+setWindowSize(1024, 768);
+```
+
+## Test a responsive React component
+
+```tsx
+import { render, screen } from "@testing-library/react";
+import { ResponsiveProvider, useBreakpoint } from "fluidity-ts/react";
+import { setWindowSize } from "fluidity-ts/testing";
+
+function Subject() {
+  const bp = useBreakpoint();
+  return <p>{bp.active}</p>;
+}
+
+test("renders the desktop breakpoint", () => {
+  setWindowSize(1280, 800);
+
+  render(
+    <ResponsiveProvider>
+      <Subject />
+    </ResponsiveProvider>,
+  );
+
+  expect(screen.getByText("xl")).toBeInTheDocument();
+});
+```
+
+## Drive media queries manually
+
+```ts
+import { installMatchMediaMock } from "fluidity-ts/testing";
+
+const media = installMatchMediaMock({ "(prefers-color-scheme: dark)": false });
+media.set("(prefers-color-scheme: dark)", true);
+media.reset();
+media.uninstall();
+```
+
+## Drive ResizeObserver manually
+
+```ts
+import { installResizeObserverMock } from "fluidity-ts/testing";
+
+const resize = installResizeObserverMock();
+resize.resize(myElement, { width: 520, height: 320 });
+resize.uninstall();
+```
+
+## Common pattern
+
+```ts
+import { beforeAll, afterAll } from "vitest";
+import { installMatchMediaMock, installResizeObserverMock } from "fluidity-ts/testing";
+
+let media: ReturnType<typeof installMatchMediaMock>;
+let resize: ReturnType<typeof installResizeObserverMock>;
+
+beforeAll(() => {
+  media = installMatchMediaMock();
+  resize = installResizeObserverMock();
+});
+
+afterAll(() => {
+  media.uninstall();
+  resize.uninstall();
+});
+```
+

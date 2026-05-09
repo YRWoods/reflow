@@ -1,0 +1,105 @@
+---
+title: Fluid Typography
+description: Generate CSS clamp expressions and type scales from TypeScript.
+---
+
+# Fluid Typography
+
+`fluidClamp()` generates CSS `clamp()` values at runtime. `fluidScale()` builds a named scale on top of the same math.
+
+## `fluidClamp()`
+
+```ts
+import { fluidClamp } from "fluidity-ts/styles";
+
+const body = fluidClamp({
+  minPx: 16,
+  maxPx: 20,
+  minVwPx: 375,
+  maxVwPx: 1280,
+});
+// clamp(1rem, 0.8964rem + 0.4419vw, 1.25rem)
+```
+
+### Options
+
+```ts
+interface ClampOptions {
+  minPx: number;
+  maxPx: number;
+  minVwPx?: number;
+  maxVwPx?: number;
+  rootPx?: number;
+  unit?: "rem" | "px";
+  precision?: number;
+}
+```
+
+## `fluidScale()`
+
+```ts
+import { fluidScale } from "fluidity-ts/styles";
+
+const typeScale = fluidScale(["sm", "base", "lg", "xl", "2xl"], {
+  minPx: 14,
+  ratio: 1.2,
+  maxRatio: 1.28,
+  minVwPx: 375,
+  maxVwPx: 1440,
+});
+
+typeScale.base;
+typeScale.xl;
+```
+
+## Rem vs px output
+
+By default, `fluidClamp()` outputs `rem` values using a `16px` root font size. Switch to `px` when you need explicit pixel output.
+
+```ts
+const remValue = fluidClamp({ minPx: 18, maxPx: 24 });
+const pxValue = fluidClamp({ minPx: 18, maxPx: 24, unit: "px" });
+```
+
+## Math behind the generated `clamp()`
+
+fluidity-ts calculates:
+
+- `slope = (maxPx - minPx) / (maxVwPx - minVwPx)`
+- `interceptPx = minPx - slope * minVwPx`
+- preferred value = `intercept + slope * 100vw`
+
+So this input:
+
+```ts
+fluidClamp({ minPx: 16, maxPx: 24, minVwPx: 320, maxVwPx: 1280 });
+```
+
+becomes roughly:
+
+```css
+clamp(1rem, 0.8333rem + 0.8333vw, 1.5rem)
+```
+
+## Real usage
+
+```tsx
+import { fluidClamp } from "fluidity-ts/styles";
+
+const styles = {
+  h1: {
+    fontSize: fluidClamp({ minPx: 32, maxPx: 64, minVwPx: 375, maxVwPx: 1440 }),
+    lineHeight: 1.05,
+  },
+  lead: {
+    fontSize: fluidClamp({ minPx: 18, maxPx: 24 }),
+  },
+};
+```
+
+## Notes
+
+- Passing the same `minVwPx` and `maxVwPx` throws an error.
+- Inverted scales are supported: `minPx` can be larger than `maxPx`.
+- Use `precision` to control rounding when you need stable snapshots in tests.
+

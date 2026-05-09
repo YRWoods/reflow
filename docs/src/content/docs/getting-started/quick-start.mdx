@@ -1,0 +1,131 @@
+---
+title: Quick Start
+description: Build a working responsive app with custom breakpoints, React hooks, and fluid type.
+---
+
+# Quick Start
+
+This example shows the main flow:
+
+1. define a typed breakpoint system,
+2. pass it to `ResponsiveProvider`,
+3. read the active breakpoint with `useBreakpoint()`, and
+4. use `fluidClamp()` for fluid type.
+
+## 1) Define your breakpoints
+
+```ts
+// src/responsive.ts
+import { createBreakpoints } from "fluidity-ts";
+
+export const appBreakpoints = {
+  mobile: 0,
+  tablet: 768,
+  laptop: 1024,
+  desktop: 1280,
+} as const;
+
+export type AppBreakpoints = typeof appBreakpoints;
+export const system = createBreakpoints(appBreakpoints);
+```
+
+## 2) Wrap your React app
+
+```tsx
+// src/main.tsx
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { ResponsiveProvider } from "fluidity-ts/react";
+import { system } from "./responsive";
+import { App } from "./App";
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <ResponsiveProvider system={system} serverWidth={1024}>
+    <App />
+  </ResponsiveProvider>,
+);
+```
+
+## 3) Read the current breakpoint
+
+```tsx
+// src/App.tsx
+import { useBreakpoint } from "fluidity-ts/react";
+import type { AppBreakpoints } from "./responsive";
+
+export function App() {
+  const bp = useBreakpoint<AppBreakpoints>();
+
+  return (
+    <main>
+      <p>Current breakpoint: {bp.active}</p>
+      {bp.above("laptop") ? <DesktopNav /> : <MobileNav />}
+    </main>
+  );
+}
+```
+
+## 4) Add fluid typography
+
+```tsx
+import { fluidClamp } from "fluidity-ts/styles";
+
+const heroTitleStyle = {
+  fontSize: fluidClamp({
+    minPx: 32,
+    maxPx: 56,
+    minVwPx: 375,
+    maxVwPx: 1440,
+  }),
+  lineHeight: 1.1,
+} satisfies React.CSSProperties;
+```
+
+## 5-minute working example
+
+```tsx
+import { createBreakpoints } from "fluidity-ts";
+import { ResponsiveProvider, Show, useBreakpoint, useResponsiveValue } from "fluidity-ts/react";
+import { fluidClamp } from "fluidity-ts/styles";
+
+const breakpoints = {
+  mobile: 0,
+  tablet: 768,
+  laptop: 1024,
+  desktop: 1280,
+} as const;
+
+type AppBreakpoints = typeof breakpoints;
+const system = createBreakpoints(breakpoints);
+
+function Dashboard() {
+  const bp = useBreakpoint<AppBreakpoints>();
+  const columns = useResponsiveValue<number, AppBreakpoints>({ mobile: 1, tablet: 2, desktop: 4 }) ?? 1;
+
+  return (
+    <main style={{ padding: 24 }}>
+      <h1 style={{ fontSize: fluidClamp({ minPx: 28, maxPx: 48 }) }}>fluidity-ts quick start</h1>
+      <p>Active breakpoint: {bp.active}</p>
+      <p>Grid columns: {columns}</p>
+
+      <Show<AppBreakpoints> above="laptop">
+        <DesktopSidebar />
+      </Show>
+      <Show<AppBreakpoints> below="laptop" fallback={<DesktopSidebar />}>
+        <MobileDrawer />
+      </Show>
+    </main>
+  );
+}
+
+export function App() {
+  return (
+    <ResponsiveProvider system={system} serverWidth={1024}>
+      <Dashboard />
+    </ResponsiveProvider>
+  );
+}
+```
+
+From here, continue to [Breakpoints](/core/breakpoints/) or the full [React guide](/frameworks/react/).
+

@@ -1,0 +1,46 @@
+---
+title: vs usehooks-ts
+description: Compare feature scope, Strict Mode safety, and migration options.
+---
+
+# vs usehooks-ts
+
+`usehooks-ts` exposes a small `useMediaQuery()` helper. fluidity-ts covers that use case, but also adds typed breakpoints, SSR width injection, container queries, fluid type, preferences, testing helpers, and framework adapters.
+
+## Strict Mode and hydration hazards
+
+Hooks that read `matchMedia()` imperatively and then synchronize state in effects can flicker under React Strict Mode or show the wrong branch during hydration. `useSyncExternalStore` exists specifically to model external subscriptions safely.
+
+fluidity-ts uses that model for breakpoints, viewport state, and media queries.
+
+## Limited feature set vs full toolkit
+
+| Capability | usehooks-ts | fluidity-ts |
+| :-- | :--: | :--: |
+| Media query hook | ✅ | ✅ |
+| Typed breakpoints | ❌ | ✅ |
+| Responsive values | ❌ | ✅ |
+| Container query utilities | ❌ | ✅ |
+| Fluid typography | ❌ | ✅ |
+| SSR breakpoint resolver | ❌ | ✅ |
+| Vue / Svelte adapters | ❌ | ✅ |
+| Testing helpers | ❌ | ✅ |
+
+## Migration steps
+
+```tsx
+// before
+import { useMediaQuery } from "usehooks-ts";
+
+const desktop = useMediaQuery("(min-width: 1024px)");
+```
+
+```tsx
+// after
+import { useMediaQuery } from "fluidity-ts/react";
+
+const desktop = useMediaQuery("(min-width: 1024px)", false);
+```
+
+For larger codebases, go one step further and replace literal widths with `createBreakpoints()` and `useBreakpoint()`.
+

@@ -1,0 +1,105 @@
+---
+title: Media Queries
+description: Use the built-in mq object and SSR-safe media query watchers.
+---
+
+# Media Queries
+
+`mq` is a prebuilt catalog of common media query strings. Pair it with `watchMedia()` in framework-agnostic code or `useMediaQuery()` in React/Vue.
+
+```ts
+import { mq, watchMedia } from "fluidity-ts";
+
+const darkMode = watchMedia(mq.prefersDark);
+console.log(darkMode.matches());
+```
+
+## All built-in query keys
+
+### Preference queries
+
+| Key | Media query |
+| :-- | :-- |
+| `prefersDark` | `(prefers-color-scheme: dark)` |
+| `prefersLight` | `(prefers-color-scheme: light)` |
+| `prefersReducedMotion` | `(prefers-reduced-motion: reduce)` |
+| `prefersReducedData` | `(prefers-reduced-data: reduce)` |
+| `prefersMoreContrast` | `(prefers-contrast: more)` |
+| `prefersLessContrast` | `(prefers-contrast: less)` |
+| `forcedColors` | `(forced-colors: active)` |
+| `invertedColors` | `(inverted-colors: inverted)` |
+
+### Pointer and hover queries
+
+| Key | Media query |
+| :-- | :-- |
+| `hover` | `(hover: hover)` |
+| `noHover` | `(hover: none)` |
+| `anyHover` | `(any-hover: hover)` |
+| `fineCursor` | `(pointer: fine)` |
+| `coarseCursor` | `(pointer: coarse)` |
+| `noPointer` | `(pointer: none)` |
+| `anyFinePointer` | `(any-pointer: fine)` |
+| `anyCoarsePointer` | `(any-pointer: coarse)` |
+
+### Viewport and device queries
+
+| Key | Media query |
+| :-- | :-- |
+| `portrait` | `(orientation: portrait)` |
+| `landscape` | `(orientation: landscape)` |
+| `retina` | `(min-resolution: 2dppx)` |
+| `fastUpdate` | `(update: fast)` |
+| `slowUpdate` | `(update: slow)` |
+| `noUpdate` | `(update: none)` |
+| `horizontalFold` | `(horizontal-viewport-segments: 2)` |
+| `verticalFold` | `(vertical-viewport-segments: 2)` |
+
+### Media types
+
+| Key | Media query |
+| :-- | :-- |
+| `print` | `print` |
+| `screen` | `screen` |
+
+## `watchMedia()`
+
+`watchMedia(query)` returns a small SSR-safe wrapper:
+
+```ts
+import { watchMedia } from "fluidity-ts";
+
+const watcher = watchMedia("(min-width: 1024px)");
+
+const unsubscribe = watcher.subscribe((matches) => {
+  console.log("desktop", matches);
+});
+
+console.log(watcher.query);
+console.log(watcher.matches());
+
+unsubscribe();
+```
+
+On the server, `watchMedia()` returns `false` and a no-op subscription instead of touching `window`.
+
+## React usage
+
+```tsx
+import { mq } from "fluidity-ts";
+import { useMediaQuery } from "fluidity-ts/react";
+
+function MotionToggle() {
+  const reducedMotion = useMediaQuery(mq.prefersReducedMotion, false);
+  return <span>{reducedMotion ? "Reduced" : "Full"} motion</span>;
+}
+```
+
+## Custom queries still work
+
+```ts
+import { watchMedia } from "fluidity-ts";
+
+const ultrawide = watchMedia("(min-aspect-ratio: 21/9)");
+```
+

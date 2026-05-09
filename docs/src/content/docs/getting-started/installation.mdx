@@ -1,0 +1,91 @@
+---
+title: Installation
+description: Install fluidity-ts and understand the available entry points.
+---
+
+# Installation
+
+## Package manager commands
+
+```bash
+npm install fluidity-ts
+```
+
+```bash
+pnpm add fluidity-ts
+```
+
+```bash
+yarn add fluidity-ts
+```
+
+## Optional peer dependencies
+
+The core package works on its own. Framework peers are only needed if you use the matching adapter:
+
+- `react >= 17` for `fluidity-ts/react`
+- `vue >= 3.3` for `fluidity-ts/vue`
+- `svelte >= 4` for `fluidity-ts/svelte`
+
+If you only use core, styles, server, testing, or Tailwind helpers, you do **not** need to install React, Vue, or Svelte.
+
+## Import paths
+
+```ts
+import { createBreakpoints, mq, watchMedia } from "fluidity-ts";
+import { ResponsiveProvider, useBreakpoint } from "fluidity-ts/react";
+import { fluidClamp, containerQuery } from "fluidity-ts/styles";
+import { resolveServerBreakpoint } from "fluidity-ts/server";
+import { installMatchMediaMock } from "fluidity-ts/testing";
+import { tailwindPreset } from "fluidity-ts/tailwind";
+import { useBreakpoint as useVueBreakpoint } from "fluidity-ts/vue";
+import { breakpoint } from "fluidity-ts/svelte";
+```
+
+## Tree-shakeable entry points
+
+| Import | What you get |
+| :-- | :-- |
+| `fluidity-ts` | Core breakpoints, media, viewport, container, preferences, pointer, DPR, safe area, and store APIs |
+| `fluidity-ts/react` | React hooks and components |
+| `fluidity-ts/vue` | Vue 3 composables |
+| `fluidity-ts/svelte` | Svelte stores |
+| `fluidity-ts/styles` | CSS helpers like `fluidClamp()` and `containerQuery()` |
+| `fluidity-ts/server` | Client Hints and user-agent SSR helpers |
+| `fluidity-ts/testing` | Test mocks for DOM environments |
+| `fluidity-ts/tailwind` | Tailwind screen preset |
+
+## Minimal core-only install
+
+```ts
+import { createBreakpoints, watchMedia, observeViewport } from "fluidity-ts";
+
+const system = createBreakpoints({ mobile: 0, tablet: 768, desktop: 1024 } as const);
+
+watchMedia(system.up("tablet")).subscribe((matches) => {
+  console.log("tablet and up", matches);
+});
+
+observeViewport(({ width }) => {
+  console.log("active breakpoint", system.resolve(width));
+});
+```
+
+## React install example
+
+```bash
+npm install fluidity-ts react react-dom
+```
+
+## Vue install example
+
+```bash
+npm install fluidity-ts vue
+```
+
+## Svelte install example
+
+```bash
+npm install fluidity-ts svelte
+```
+

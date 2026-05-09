@@ -1,0 +1,68 @@
+---
+title: vs react-responsive
+description: Compare responsive hooks, SSR behavior, and migration paths.
+---
+
+# vs react-responsive
+
+`react-responsive` is good at answering “does this media query match?” fluidity-ts solves that problem **and** typed breakpoints, responsive values, fluid type, container queries, preferences, SSR helpers, testing utilities, and Tailwind syncing.
+
+## Side-by-side code
+
+### `react-responsive`
+
+```tsx
+import { useMediaQuery } from "react-responsive";
+
+export function Nav() {
+  const isDesktop = useMediaQuery({ minWidth: 1024 });
+  return isDesktop ? <DesktopNav /> : <MobileNav />;
+}
+```
+
+### `fluidity-ts`
+
+```tsx
+import { useBreakpoint } from "fluidity-ts/react";
+
+type AppBreakpoints = {
+  mobile: 0;
+  tablet: 768;
+  desktop: 1024;
+};
+
+export function Nav() {
+  const bp = useBreakpoint<AppBreakpoints>();
+  return bp.above("desktop") ? <DesktopNav /> : <MobileNav />;
+}
+```
+
+## Feature matrix
+
+| Feature | react-responsive | fluidity-ts |
+| :-- | :--: | :--: |
+| Media query hook | ✅ | ✅ |
+| Typed breakpoint names | ❌ | ✅ |
+| Provider-level SSR width | ⚠️ | ✅ |
+| Container query helpers | ❌ | ✅ |
+| Fluid typography utilities | ❌ | ✅ |
+| Preference APIs | Limited | ✅ |
+| Client Hints server helpers | ❌ | ✅ |
+| Tailwind preset | ❌ | ✅ |
+
+## Bundle size perspective
+
+| Stack | Approx. shipped feature area |
+| :-- | :-- |
+| `react-responsive` | Media query matching only |
+| `fluidity-ts/react` | ~3.3 KB for the React adapter, with core/style/server entries available as needed |
+| `react-responsive` + extra responsive utilities | Usually multiple packages and duplicated breakpoint logic |
+
+## Migration steps
+
+1. Move repeated numeric widths into `createBreakpoints()`.
+2. Replace ad-hoc `useMediaQuery({ minWidth })` calls with `useBreakpoint()` or `useMediaQuery(system.up(...))`.
+3. Wrap your app in `ResponsiveProvider` and pass `serverWidth` during SSR.
+4. Replace custom show/hide wrappers with `<Show>` / `<Hide>`.
+5. Consolidate related responsive helpers into `fluidity-ts/styles`, `fluidity-ts/server`, and `fluidity-ts/testing`.
+

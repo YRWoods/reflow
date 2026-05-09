@@ -1,0 +1,62 @@
+---
+title: SSR Overview
+description: Understand the hydration mismatch problem and how fluidity-ts avoids it.
+---
+
+# SSR Overview
+
+Responsive rendering is hard on the server because the server usually does **not** know the real viewport width. If you render desktop markup on the server and mobile markup on the client, React warns about hydration mismatches and users see a flash of the wrong UI.
+
+## The problem
+
+These patterns often cause flicker or warnings:
+
+```tsx
+const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+const width = window.innerWidth;
+```
+
+They are not available during SSR, and effect-driven fixes only run **after** the first paint.
+
+## How fluidity-ts solves it
+
+In React, the adapter uses `useSyncExternalStore` with a stable `getServerSnapshot()` value. That means server and client agree on the initial responsive state.
+
+```tsx
+import { ResponsiveProvider, useBreakpoint } from "fluidity-ts/react";
+
+function App() {
+  const bp = useBreakpoint();
+  return <p>{bp.active}</p>;
+}
+
+export function Root() {
+  return (
+    <ResponsiveProvider serverWidth={1024} serverHeight={768}>
+      <App />
+    </ResponsiveProvider>
+  );
+}
+```
+
+## Where `serverWidth` comes from
+
+The server-side helpers help you guess a realistic first width:
+
+- `resolveBreakpointFromHints()` from Client Hints headers.
+- `resolveBreakpointFromUserAgent()` as a coarse fallback.
+- `resolveServerBreakpoint()` to try both.
+
+## Framework story
+
+- **React**: `ResponsiveProvider` + `useSyncExternalStore`.
+- **Vue**: `createFluidityPlugin({ serverWidth, serverHeight })` seeds the shared store.
+- **Svelte/core**: pass server defaults where appropriate and hydrate into live subscriptions on the client.
+
+## Practical recommendation
+
+1. Send Client Hints opt-in headers.
+2. Resolve a server width from request headers.
+3. Pass that width into the provider/plugin.
+4. Let the client take over once mounted.
+

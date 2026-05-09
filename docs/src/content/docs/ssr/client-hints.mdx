@@ -1,0 +1,78 @@
+---
+title: Client Hints
+description: Use viewport and device hints to resolve responsive state on the server.
+---
+
+# Client Hints
+
+Client Hints let the browser send device information in HTTP headers so the server can make better rendering decisions before hydration.
+
+## Relevant headers
+
+- `Sec-CH-Viewport-Width` — the layout viewport width in CSS pixels.
+- `Viewport-Width` — legacy fallback used by some stacks.
+- `Sec-CH-UA-Mobile` — `?1` for mobile form factors.
+
+fluidity-ts exposes `clientHintsResponseHeaders` so you can opt-in once and reuse the same values everywhere.
+
+```ts
+import { clientHintsResponseHeaders } from "fluidity-ts/server";
+
+for (const [key, value] of Object.entries(clientHintsResponseHeaders)) {
+  console.log(key, value);
+}
+```
+
+## Resolve directly from hints
+
+```ts
+import { createBreakpoints } from "fluidity-ts";
+import { resolveBreakpointFromHints } from "fluidity-ts/server";
+
+const system = createBreakpoints({ mobile: 0, tablet: 768, desktop: 1024 } as const);
+
+const result = resolveBreakpointFromHints(
+  {
+    "Sec-CH-Viewport-Width": "834",
+    "Sec-CH-UA-Mobile": "?0",
+  },
+  system,
+);
+
+result?.active; // "tablet"
+result?.width;  // 834
+```
+
+## Fallback to user agent
+
+```ts
+import { resolveBreakpointFromUserAgent } from "fluidity-ts/server";
+
+const guessed = resolveBreakpointFromUserAgent(
+  "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X)",
+  system,
+);
+```
+
+## One helper for both
+
+```ts
+import { resolveServerBreakpoint } from "fluidity-ts/server";
+
+const resolved = resolveServerBreakpoint(
+  {
+    headers: request.headers,
+    userAgent: request.headers.get("user-agent") ?? undefined,
+  },
+  system,
+);
+```
+
+## When to use which API
+
+| API | Best when |
+| :-- | :-- |
+| `resolveBreakpointFromHints()` | You already opted into Client Hints and want the most accurate width guess |
+| `resolveBreakpointFromUserAgent()` | You need a coarse fallback for first requests or non-CH clients |
+| `resolveServerBreakpoint()` | You want the common “try hints, then UA” flow |
+

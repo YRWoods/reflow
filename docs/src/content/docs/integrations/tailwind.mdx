@@ -1,0 +1,73 @@
+---
+title: Tailwind CSS
+description: Keep Tailwind screens aligned with your fluidity-ts breakpoint system.
+---
+
+# Tailwind CSS
+
+`tailwindPreset(system)` converts a fluidity-ts breakpoint system into a Tailwind `screens` preset. The goal is simple: one source of truth for breakpoints.
+
+## Shared configuration
+
+```ts
+// src/responsive.ts
+import { createBreakpoints } from "fluidity-ts";
+
+export const system = createBreakpoints({
+  sm: 0,
+  md: 768,
+  lg: 1024,
+  xl: 1280,
+} as const);
+```
+
+## Tailwind config
+
+```ts
+// tailwind.config.ts
+import { tailwindPreset } from "fluidity-ts/tailwind";
+import { system } from "./src/responsive";
+
+export default {
+  presets: [tailwindPreset(system)],
+};
+```
+
+Generated screens look like this:
+
+```ts
+{
+  theme: {
+    screens: {
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
+    },
+  },
+}
+```
+
+Breakpoints with a `0` minimum are omitted because Tailwind's base styles already cover the smallest range.
+
+## Runtime + utility classes together
+
+```tsx
+import { useBreakpoint } from "fluidity-ts/react";
+
+type TailwindBreakpoints = {
+  sm: 0;
+  md: 768;
+  lg: 1024;
+  xl: 1280;
+};
+
+export function Sidebar() {
+  const bp = useBreakpoint<TailwindBreakpoints>();
+  return <aside className="hidden lg:block">Current: {bp.active}</aside>;
+}
+```
+
+## Tailwind v4 compatibility
+
+Tailwind v4 still supports config-based workflows in compatibility mode. If your project uses `tailwind.config.{js,ts}`, `tailwindPreset(system)` keeps runtime hooks and utility breakpoints in sync.
+

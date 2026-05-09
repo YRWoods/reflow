@@ -1,0 +1,76 @@
+---
+title: Preferences
+description: Read accessibility and user preference media features with typed keys.
+---
+
+# Preferences
+
+`PreferenceKey` covers eight common user preference features and color-scheme aliases.
+
+## All keys
+
+| Key | CSS feature |
+| :-- | :-- |
+| `reducedMotion` | `prefers-reduced-motion: reduce` |
+| `reducedData` | `prefers-reduced-data: reduce` |
+| `moreContrast` | `prefers-contrast: more` |
+| `lessContrast` | `prefers-contrast: less` |
+| `forcedColors` | `forced-colors: active` |
+| `invertedColors` | `inverted-colors: inverted` |
+| `dark` | `prefers-color-scheme: dark` |
+| `light` | `prefers-color-scheme: light` |
+
+## Core API
+
+```ts
+import { getAllPreferences, getPreference, observePreference } from "fluidity-ts";
+
+const dark = getPreference("dark");
+const prefs = getAllPreferences();
+
+const stop = observePreference("reducedMotion", (enabled) => {
+  document.documentElement.classList.toggle("reduced-motion", enabled);
+});
+
+stop();
+```
+
+## React hook
+
+```tsx
+import { usePreference } from "fluidity-ts/react";
+
+export function PreferencesPanel() {
+  const reducedMotion = usePreference("reducedMotion");
+  const forcedColors = usePreference("forcedColors");
+  const dark = usePreference("dark");
+
+  return (
+    <ul>
+      <li>Reduced motion: {String(reducedMotion)}</li>
+      <li>Forced colors: {String(forcedColors)}</li>
+      <li>Dark mode: {String(dark)}</li>
+    </ul>
+  );
+}
+```
+
+## Color scheme helper
+
+If you want a richer API than a boolean preference, use `useColorScheme()` or the Vue/Svelte equivalents.
+
+```tsx
+import { useColorScheme } from "fluidity-ts/react";
+
+const { colorScheme, isDark, setColorScheme } = useColorScheme({
+  serverDefault: "light",
+  storageKey: "theme",
+});
+
+setColorScheme(isDark ? "light" : "dark");
+```
+
+## Accessibility-first defaults
+
+These APIs are SSR-safe. On the server they resolve to `false` unless you provide server defaults at the framework layer. That makes them safe to use in shared components without `typeof window` checks.
+

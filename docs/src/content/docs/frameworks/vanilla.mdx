@@ -1,0 +1,82 @@
+---
+title: Vanilla TypeScript
+description: Use the core responsive primitives without any framework.
+---
+
+# Vanilla TypeScript
+
+The root `fluidity-ts` entry point is framework-agnostic. You can build event-driven responsive behavior with zero adapter code.
+
+## `createFluidityStore()`
+
+```ts
+import { createBreakpoints, createFluidityStore } from "fluidity-ts";
+
+const system = createBreakpoints({ mobile: 0, tablet: 768, desktop: 1024 } as const);
+const store = createFluidityStore(system, { initialWidth: 1024, initialHeight: 768 });
+
+const stop = store.subscribe(() => {
+  const snap = store.getSnapshot();
+  console.log(snap.active, snap.width, snap.height, snap.orientation);
+});
+
+stop();
+```
+
+## `watchMedia()`
+
+```ts
+import { mq, watchMedia } from "fluidity-ts";
+
+const darkMode = watchMedia(mq.prefersDark);
+const unsubscribe = darkMode.subscribe((matches) => {
+  document.documentElement.dataset.theme = matches ? "dark" : "light";
+});
+```
+
+## `observeViewport()`
+
+```ts
+import { createBreakpoints, observeViewport } from "fluidity-ts";
+
+const system = createBreakpoints({ mobile: 0, tablet: 768, desktop: 1024 } as const);
+
+observeViewport(({ width, height, orientation }) => {
+  document.body.dataset.breakpoint = system.resolve(width);
+  console.log(width, height, orientation);
+}, { immediate: true });
+```
+
+## `observeContainer()`
+
+```ts
+import { observeContainer } from "fluidity-ts";
+
+const panel = document.querySelector("[data-panel]")!;
+observeContainer(panel, ({ width }) => {
+  panel.classList.toggle("panel--wide", width >= 480);
+});
+```
+
+## `observePreference()`
+
+```ts
+import { observePreference } from "fluidity-ts";
+
+observePreference("reducedMotion", (enabled) => {
+  document.documentElement.classList.toggle("reduced-motion", enabled);
+});
+```
+
+## Event-based usage pattern
+
+```ts
+import { getDevicePixelRatio, getPointerCapabilities, getSafeArea } from "fluidity-ts";
+
+console.log(getDevicePixelRatio());
+console.log(getPointerCapabilities());
+console.log(getSafeArea());
+```
+
+That makes fluidity-ts a good fit for Web Components, Lit, Solid, Alpine, or any custom runtime that can work with plain functions and subscriptions.
+
