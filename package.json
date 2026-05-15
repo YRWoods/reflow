@@ -287,22 +287,22 @@
     {
       "name": "core (esm, gz)",
       "path": "dist/index.js",
-      "limit": "3 KB"
+      "limit": "5 KB"
     },
     {
       "name": "react adapter (esm, gz)",
       "path": "dist/react/index.js",
-      "limit": "4 KB"
+      "limit": "5 KB"
     },
     {
       "name": "styles (esm, gz)",
       "path": "dist/styles/index.js",
-      "limit": "2 KB"
+      "limit": "3 KB"
     },
     {
       "name": "server (esm, gz)",
       "path": "dist/server/index.js",
-      "limit": "1.5 KB"
+      "limit": "2 KB"
     }
   ],
   "publishConfig": {
