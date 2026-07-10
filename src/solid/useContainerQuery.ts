@@ -37,9 +37,13 @@ export function useContainerQuery(
       }
 
       setMatches(matchesContainerRange(getContainerSize(element), currentRange));
-      const unsubscribe = observeContainer(element, (size) => {
-        setMatches(matchesContainerRange(size, currentRange));
-      }, options);
+      const unsubscribe = observeContainer(
+        element,
+        (size) => {
+          setMatches(matchesContainerRange(size, currentRange));
+        },
+        options,
+      );
 
       onCleanup(unsubscribe);
     });
@@ -71,9 +75,13 @@ export function useContainerSize(
       }
 
       setSize(getContainerSize(element));
-      const unsubscribe = observeContainer(element, (nextSize) => {
-        setSize(nextSize);
-      }, options);
+      const unsubscribe = observeContainer(
+        element,
+        (nextSize) => {
+          setSize(nextSize);
+        },
+        options,
+      );
 
       onCleanup(unsubscribe);
     });

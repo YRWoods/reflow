@@ -24,9 +24,13 @@ export function containerQuery(
     if (typeof window === "undefined") return;
     const resolvedRange = { minPx: range.minPx, maxPx: range.maxPx };
     set(matchesContainerRange(getContainerSize(el), resolvedRange));
-    return observeContainer(el, (size) => {
-      set(matchesContainerRange(size, resolvedRange));
-    }, options);
+    return observeContainer(
+      el,
+      (size) => {
+        set(matchesContainerRange(size, resolvedRange));
+      },
+      options,
+    );
   });
 }
 

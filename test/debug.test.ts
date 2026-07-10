@@ -1,6 +1,6 @@
 import { renderHook } from "@solidjs/testing-library";
-import { describe, it, expect } from "vitest";
 import { createSignal } from "solid-js";
+import { describe, expect, it } from "vitest";
 
 describe("debug", () => {
   it("inspect renderHook result", () => {

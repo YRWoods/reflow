@@ -33,11 +33,15 @@ export function useContainerQuery(
     if (!el) return;
     const r = { minPx, maxPx };
     setMatches(matchesContainerRange(getContainerSize(el), r));
-    const unsub = observeContainer(el, (size) => {
-      setMatches(matchesContainerRange(size, r));
-    }, options);
+    const unsub = observeContainer(
+      el,
+      (size) => {
+        setMatches(matchesContainerRange(size, r));
+      },
+      options,
+    );
     return unsub;
-  }, [ref, minPx, maxPx, options.debounce, options.throttle]);
+  }, [ref, minPx, maxPx, options]);
 
   return matches;
 }
@@ -54,6 +58,6 @@ export function useContainerSize(
     if (!el) return;
     setSize(getContainerSize(el));
     return observeContainer(el, setSize, options);
-  }, [ref, options.debounce, options.throttle]);
+  }, [ref, options]);
   return size;
 }
