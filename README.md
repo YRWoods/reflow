@@ -2,138 +2,47 @@
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/brand/logo-dark.png">
-  <img src="./assets/brand/logo.png" alt="reflow" width="140" height="140">
+  <img src="./assets/brand/logo.png" alt="reflow" width="120" height="120">
 </picture>
 
-<h1>reflow</h1>
+# reflow
 
-<p><strong>The complete, SSR-safe, framework-agnostic responsive toolkit for TypeScript.</strong></p>
+**SSR-safe responsive toolkit for TypeScript. One API, every framework.**
 
-<p>
-  Typed breakpoints &nbsp;·&nbsp; Fluid typography &nbsp;·&nbsp; Container queries<br/>
-  User preferences &nbsp;·&nbsp; Server rendering &nbsp;·&nbsp; Zero dependencies
-</p>
-
-<p>
-  <a href="https://www.npmjs.com/package/reflow"><img alt="npm version" src="https://img.shields.io/npm/v/reflow?style=flat-square&color=0EA5A5"></a>
-  <a href="https://www.npmjs.com/package/reflow"><img alt="downloads" src="https://img.shields.io/npm/dm/reflow?style=flat-square&label=downloads&color=22D3EE"></a>
-  <a href="https://bundlephobia.com/package/reflow"><img alt="bundle size" src="https://img.shields.io/bundlephobia/minzip/reflow?style=flat-square&label=gzip&color=67E8F0"></a>
-  <a href="https://www.npmjs.com/package/reflow"><img alt="types" src="https://img.shields.io/npm/types/reflow?style=flat-square&color=3178C6"></a>
-  <a href="https://github.com/valtors/reflow/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/valtors/reflow/ci.yml?style=flat-square&label=CI"></a>
-  <a href="https://github.com/valtors/reflow/stargazers"><img alt="stars" src="https://img.shields.io/github/stars/valtors/reflow?style=flat-square&color=FFD700"></a>
-  <a href="./LICENSE"><img alt="license" src="https://img.shields.io/npm/l/reflow?style=flat-square&color=0F172A"></a>
-</p>
-
-> 🌐 **[reflow.vercel.app](https://reflow.vercel.app)** — See the full interactive showcase
-
-<p>
-  <a href="https://valtors.github.io/reflow-demo/"><strong>Live Demo</strong></a>
-  &nbsp;·&nbsp;
-  <a href="https://stackblitz.com/github/valtors/reflow-demo"><strong>StackBlitz</strong></a>
-  &nbsp;·&nbsp;
-  <a href="./CONTRIBUTING.md"><strong>Contributing</strong></a>
-</p>
+[![npm version](https://img.shields.io/npm/v/reflow?style=flat-square&color=0EA5A5)](https://www.npmjs.com/package/reflow)
+[![npm downloads](https://img.shields.io/npm/dm/reflow?style=flat-square&label=downloads&color=22D3EE)](https://www.npmjs.com/package/reflow)
+[![CI](https://img.shields.io/github/actions/workflow/status/valtors/reflow/ci.yml?style=flat-square&label=CI)](https://github.com/valtors/reflow/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-0F172A?style=flat-square)](./LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?style=flat-square)](https://www.typescriptlang.org/)
 
 </div>
 
 ```bash
-# npm / yarn / pnpm
 npm install reflow
 ```
 
-<p align="center">
-  <sub>
-    <a href="#the-problem">Problem</a> ·
-    <a href="#how-it-compares">Compare</a> ·
-    <a href="#framework-support">Frameworks</a> ·
-    <a href="#quick-start">Quick Start</a> ·
-    <a href="#whats-included">What's Included</a> ·
-    <a href="#why-reflow">Why reflow?</a> ·
-    <a href="#ecosystem">Ecosystem</a> ·
-    <a href="#ssr-integration">SSR</a> ·
-    <a href="#api-reference">API</a> ·
-    <a href="#used-by">Used By</a> ·
-    <a href="#sponsors">Sponsors</a> ·
-    <a href="#contributing">Contributing</a>
-  </sub>
-</p>
+## What is this?
 
-<p align="center"><sub>──────────── ✦ ────────────</sub></p>
+Reflow gives you breakpoints, container queries, fluid typography, viewport tracking, and user preference detection in one library. It works in React, Vue, Svelte, Solid, Qwik, Preact, Lit, Angular, and plain JS. No hydration mismatch warnings. No `typeof window` checks scattered everywhere.
 
-## The Problem
+One import. One type system. Zero framework lock-in.
 
-Building responsive UIs in 2026 means duct-taping 5+ packages together — a media-query hook, a window-size hook, a fluid-type calculator, a container-query polyfill, a UA sniffer. Each ships its own hydration footguns, its own global state, its own untyped API. You end up with 22 KB of overlapping deps and a graveyard of `typeof window !== "undefined"` checks.
-
-**reflow replaces all of them with one library.** One import, one provider, one type system — from breakpoint detection to fluid typography to server-side rendering.
-
-<br/>
-
-## How It Compares
-
-| Capability                               | react-responsive | react-use | usehooks-ts | use-media | @vueuse/core | react-device-detect | **reflow** |
-| :--------------------------------------- | :--------------: | :-------: | :---------: | :-------: | :----------: | :-----------------: | :-------------: |
-| SSR-safe (zero hydration warnings)       |        ❌        |    ⚠️     |     ❌      |    ⚠️     |      ⚠️      |         ❌          |      **✅**     |
-| Typed breakpoint inference               |        ❌        |    ❌     |     ❌      |    ❌     |      ⚠️      |         ❌          |      **✅**     |
-| Runtime `fluidClamp()` / fluid scale     |        ❌        |    ❌     |     ❌      |    ❌     |      ❌       |         ❌          |      **✅**     |
-| Container queries                        |        ❌        |    ❌     |     ❌      |    ❌     |      ❌       |         ❌          |      **✅**     |
-| `prefers-reduced-data` / `forced-colors` |        ❌        |    ❌     |     ❌      |    ❌     |      ⚠️      |         ❌          |      **✅**     |
-| Client Hints / SSR breakpoint resolver   |        ❌        |    ❌     |     ❌      |    ❌     |      ❌       |         ❌          |      **✅**     |
-| Framework-agnostic core                  |        ❌        |    ❌     |     ❌      |    ❌     |      ❌       |         ❌          |      **✅**     |
-| Actively maintained (2026)               |        ⚠️        |    ⚠️     |     ✅      |    ⚠️     |      ✅       |    ❌ _(abandoned)_  |      **✅**     |
-
-<p align="center"><sub>──────────── ✦ ────────────</sub></p>
-
-## Framework Support
-
-<table>
-<tr>
-<td align="center" width="25%"><strong>React</strong><br/><sub>First-class adapter</sub></td>
-<td align="center" width="25%"><strong>Vue</strong><br/><sub>Vue 3 composables</sub></td>
-<td align="center" width="25%"><strong>Svelte</strong><br/><sub>Svelte stores</sub></td>
-<td align="center" width="25%"><strong>Solid</strong><br/><sub>Framework-agnostic core</sub></td>
-</tr>
-<tr>
-<td align="center"><strong>Angular</strong><br/><sub>Framework-agnostic core</sub></td>
-<td align="center"><strong>Preact</strong><br/><sub>React-compatible adapter</sub></td>
-<td align="center"><strong>Qwik</strong><br/><sub>Framework-agnostic core</sub></td>
-<td align="center"><strong>Lit</strong><br/><sub>Framework-agnostic core</sub></td>
-</tr>
-<tr>
-<td align="center"><strong>Astro</strong><br/><sub>Islands + SSR helpers</sub></td>
-<td align="center"><strong>Next.js</strong><br/><sub>App / Pages Router SSR</sub></td>
-<td align="center"><strong>Nuxt</strong><br/><sub>Vue + server rendering</sub></td>
-<td align="center"><strong>SvelteKit</strong><br/><sub>Svelte + server rendering</sub></td>
-</tr>
-<tr>
-<td align="center" colspan="4"><strong>Remix</strong><br/><sub>Server rendering</sub></td>
-</tr>
-</table>
-
-<sub>React, Vue, and Svelte ship dedicated entry points today. Everything else plugs into the same framework-agnostic core, SSR utilities, or React-compatible adapter surface.</sub>
-
-<p align="center"><sub>──────────── ✦ ────────────</sub></p>
-
-## Quick Start
+## Quick start
 
 ### React
 
 ```tsx
-// App.tsx
 import { ResponsiveProvider, useBreakpoint, useResponsiveValue, Show } from "reflow/react";
 import { fluidClamp } from "reflow/styles";
 
 function App() {
   const bp = useBreakpoint();
-  // bp.active → "xs" | "sm" | "md" | "lg" | "xl" | "2xl"
-  // bp.is("md"), bp.above("lg"), bp.below("xl"), bp.between("sm", "lg")
-
   const cols = useResponsiveValue({ xs: 1, md: 2, xl: 4 });
 
   return (
     <main style={{ fontSize: fluidClamp({ minPx: 16, maxPx: 22 }) }}>
-      <p>Breakpoint: <strong>{bp.active}</strong></p>
+      <p>Breakpoint: {bp.active}</p>
       <Grid columns={cols} />
-
       <Show above="md">
         <Sidebar />
       </Show>
@@ -155,8 +64,7 @@ export default () => (
 
 ```vue
 <script setup lang="ts">
-import { useBreakpoint } from 'reflow/vue';
-
+import { useBreakpoint } from "reflow/vue";
 const bp = useBreakpoint();
 </script>
 
@@ -170,7 +78,7 @@ const bp = useBreakpoint();
 
 ```svelte
 <script>
-  import { breakpoint } from 'reflow/svelte';
+  import { breakpoint } from "reflow/svelte";
   const bp = breakpoint();
 </script>
 
@@ -181,359 +89,64 @@ const bp = useBreakpoint();
 {/if}
 ```
 
-<p align="center"><sub>──────────── ✦ ────────────</sub></p>
-
-## Why reflow?
-
-<table>
-<tr>
-<td width="50%">
-
-### 🔒 Truly SSR-Safe
-Every hook uses `useSyncExternalStore` with `getServerSnapshot`. Pair with `<ResponsiveProvider serverWidth={…}>` — correct breakpoint on first paint, zero hydration mismatch.
-
-</td>
-<td width="50%">
-
-### 🎯 Typed Breakpoints
-`createBreakpoints({ sm: 640, md: 768 } as const)` gives literal-typed keys everywhere — autocomplete in hooks, `<Show>`, `responsiveStyle`, and more.
-
-</td>
-</tr>
-<tr>
-<td>
-
-### 📐 Fluid Typography
-`fluidClamp()` generates CSS `clamp()` at runtime — no more copy-pasting from utopia.fyi. Includes inverted-slope guard and a `fluidScale()` builder for full type scales.
-
-</td>
-<td>
-
-### 🖥️ Server Rendering
-`resolveBreakpointFromHints(headers)` reads `Sec-CH-Viewport-Width` / `Sec-CH-UA-Mobile` with UA fallback. Works with Next.js, Hono, Express — any server framework.
-
-</td>
-</tr>
-<tr>
-<td>
-
-### ♿ Accessibility-First
-`prefers-reduced-motion`, `prefers-reduced-data`, `prefers-contrast`, `forced-colors`, `inverted-colors` — all typed, all SSR-safe, all first-class citizens.
-
-</td>
-<td>
-
-### 🧩 Framework-Agnostic
-Vanilla core works in Vue, Svelte, Solid, or plain JS. React adapter is opt-in via `reflow/react`. Use just the core — it has zero dependencies.
-
-</td>
-</tr>
-</table>
-
-<p align="center"><sub>──────────── ✦ ────────────</sub></p>
-
-## What's Included
-
-One toolkit, split into focused modules you can adopt independently.
-
-| Module | Includes |
-| :--- | :--- |
-| **Core** | breakpoints, viewport, media queries, container queries, preferences, pointer, DPR, safe area |
-| **Styles** | fluid clamp, responsive grid, responsive stack |
-| **Motion** | spring physics, responsive transitions, reduce-motion |
-| **A11y** | touch targets, font sizing, line length, audit |
-| **Images** | srcset generation, art direction, optimal widths |
-| **Debug** | devtools overlay, perf marks, logging |
-
-<p align="center"><sub>──────────── ✦ ────────────</sub></p>
-
-## Architecture
-
-```text
-reflow
-├── core/          ← Framework-agnostic primitives (no React, no DOM assumptions)
-│   ├── breakpoints    createBreakpoints(), defaultBreakpoints, resolve/up/down/between/only
-│   ├── media          watchMedia(), mq.* (prebuilt media query strings)
-│   ├── viewport       observeViewport(), getViewport(), visual viewport API
-│   ├── container      observeContainer(), getContainerSize(), matchesContainerRange()
-│   ├── preferences    observePreference(), getAllPreferences()
-│   ├── pointer        observePointerCapabilities(), getPointerCapabilities()
-│   ├── dpr            observeDevicePixelRatio(), getDevicePixelRatio()
-│   ├── safe-area      observeSafeArea(), getSafeArea()
-│   ├── responsive     resolveResponsive() — pick value by breakpoint
-│   └── store          createFluidityStore() — shared reactive state
-│
-├── react/         ← React adapter (opt-in, uses useSyncExternalStore)
-│   ├── ResponsiveProvider    context provider with serverWidth/serverHeight
-│   ├── useBreakpoint         active breakpoint + is/above/below/between helpers
-│   ├── useMediaQuery         SSR-safe matchMedia
-│   ├── useViewport           { width, height, orientation }
-│   ├── useResponsiveValue    resolve breakpoint-keyed values
-│   ├── usePreference         reduced-motion, dark mode, forced-colors…
-│   ├── usePointer            hover, coarse, fine detection
-│   ├── useDevicePixelRatio   retina detection
-│   ├── useSafeArea           env(safe-area-inset-*)
-│   ├── useContainerQuery     ResizeObserver-based container queries
-│   ├── useDynamicViewport    dvh/svh/lvh in pixels
-│   ├── Show / Hide           declarative breakpoint rendering
-│   └── BreakpointBadge       dev overlay (breakpoint + viewport size)
-│
-├── vue/           ← Vue 3 composables
-├── svelte/        ← Svelte stores
-├── styles/        ← Pure-string CSS helpers (no DOM, no side effects)
-│   ├── fluidClamp / fluidScale     CSS clamp() generation
-│   ├── containerQuery              @container rule builder
-│   ├── responsiveStyle             breakpoint → media-query style objects
-│   ├── safeAreaInset / Padding     env() safe-area helpers
-│   ├── dvh / svh / lvh             dynamic viewport unit helpers
-│   ├── printOnly / screenOnly      print media helpers
-│   ├── visuallyHidden              screen-reader-only styles
-│   └── logical                     physical → logical property mapper
-│
-├── server/        ← Node.js / edge runtime
-│   ├── resolveBreakpointFromHints     Client Hints → breakpoint
-│   ├── resolveBreakpointFromUA        User-Agent fallback
-│   ├── resolveServerBreakpoint        tries hints, then UA
-│   └── clientHintsResponseHeaders     Accept-CH / Critical-CH headers
-│
-├── testing/       ← Test utilities for downstream consumers
-│   ├── installMatchMediaMock          controllable matchMedia
-│   ├── installResizeObserverMock      controllable ResizeObserver
-│   └── setWindowSize                  resize + dispatch
-│
-└── tailwind/      ← Tailwind CSS integration
-    └── tailwindPreset                 sync breakpoints → Tailwind screens
-```
-
-<p align="center"><sub>──────────── ✦ ────────────</sub></p>
-
-## Entry Points
-
-| Import | Description | Size (gzip) |
-| :--- | :--- | ---: |
-| `reflow` | Vanilla core — breakpoints, media, viewport, container, preferences, pointer, DPR, safe-area, store | ~2.4 KB |
-| `reflow/react` | React hooks + components — everything above, reactive | ~3.3 KB |
-| `reflow/vue` | Vue 3 composables | — |
-| `reflow/svelte` | Svelte stores | — |
-| `reflow/styles` | CSS helpers — fluidClamp, containerQuery, responsiveStyle, safeArea, print, a11y | ~1.3 KB |
-| `reflow/server` | Server resolver — Client Hints + UA → breakpoint + width | ~0.8 KB |
-| `reflow/testing` | Test mocks — matchMedia, ResizeObserver, setWindowSize | — |
-| `reflow/tailwind` | Tailwind preset — sync your breakpoints to Tailwind screens | — |
-
-All entries are **tree-shakeable** (`sideEffects: false`), ship **ESM + CJS**, and have **full TypeScript declarations**.
-
-<p align="center"><sub>──────────── ✦ ────────────</sub></p>
-
-## Recipes
-
-<details open>
-<summary><strong>Fluid Typography</strong></summary>
-
-Replace copy-pasted CSS from utopia.fyi with a typed function:
+### Vanilla JS
 
 ```ts
-// styles/typography.ts
-import { fluidClamp, fluidScale } from "reflow/styles";
-
-// Single value
-const fontSize = fluidClamp({ minPx: 16, maxPx: 22, minVwPx: 360, maxVwPx: 1280 });
-// → "clamp(1rem, 0.8rem + 0.625vw, 1.375rem)"
-
-// Full type scale
-const scale = fluidScale(["sm", "base", "lg", "xl", "2xl"], {
-  minPx: 14,
-  ratio: 1.2,
-});
-// → { sm: "clamp(...)", base: "clamp(...)", lg: "clamp(...)", ... }
-```
-
-</details>
-
-<details>
-<summary><strong>Container Queries</strong></summary>
-
-No polyfill needed — native `ResizeObserver` under the hood:
-
-```tsx
-// components/Card.tsx
-import { useRef } from "react";
-import { useContainerQuery, useContainerSize } from "reflow/react";
-
-function Card() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isWide = useContainerQuery(ref, { minPx: 480 });
-  const size = useContainerSize(ref);
-
-  return (
-    <div ref={ref}>
-      {isWide ? <HorizontalLayout /> : <StackedLayout />}
-      <span>{size.width}×{size.height}</span>
-    </div>
-  );
-}
-```
-
-</details>
-
-<details>
-<summary><strong>User Preferences</strong></summary>
-
-Respect every user preference — all typed, all SSR-safe:
-
-```tsx
-// app/App.tsx
-import { usePreference } from "reflow/react";
-
-function App() {
-  const reducedMotion = usePreference("reduced-motion");
-  const reducedData   = usePreference("reduced-data");
-  const forcedColors  = usePreference("forced-colors");
-  const darkMode      = usePreference("dark");
-
-  return (
-    <div className={darkMode ? "dark" : "light"}>
-      {reducedData ? <LowResImage /> : <HighResImage />}
-      <AnimatedHero animate={!reducedMotion} />
-    </div>
-  );
-}
-```
-
-</details>
-
-<details>
-<summary><strong>Conditional Rendering</strong></summary>
-
-Declarative show/hide based on breakpoints:
-
-```tsx
-// components/navigation.tsx
-import { Show, Hide } from "reflow/react";
-
-<Show above="md">
-  <DesktopSidebar />
-</Show>
-
-<Show below="md" fallback={<DesktopNav />}>
-  <MobileMenu />
-</Show>
-
-<Show between={["sm", "lg"]}>
-  <TabletSpecificWidget />
-</Show>
-
-<Hide above="xl">
-  <CompactFooter />
-</Hide>
-```
-
-</details>
-
-<details>
-<summary><strong>Dev Overlay</strong></summary>
-
-Drop a breakpoint badge in your app during development:
-
-```tsx
-// app/devtools.tsx
-import { BreakpointBadge } from "reflow/react";
-
-// Shows "md · 768×1024" in the corner — auto-hidden in production
-<BreakpointBadge position="bottom-right" />
-```
-
-</details>
-
-<details>
-<summary><strong>Custom Breakpoints</strong></summary>
-
-Define your own breakpoint system with full type inference:
-
-```ts
-// breakpoints.ts
-import { createBreakpoints } from "reflow";
-
-const bp = createBreakpoints({
-  mobile: 0,
-  tablet: 600,
-  desktop: 1024,
-  wide: 1440,
-} as const);
-
-bp.resolve(800);              // → "tablet"
-bp.up("desktop");             // → "(min-width: 1024px)"
-bp.between("tablet", "wide"); // → "(min-width: 600px) and (max-width: 1439.98px)"
-```
-
-</details>
-
-<details>
-<summary><strong>Tailwind Integration</strong></summary>
-
-Share breakpoints between reflow and Tailwind CSS:
-
-```ts
-// tailwind.config.ts
-import { tailwindPreset } from "reflow/tailwind";
-import { defaultBreakpoints } from "reflow";
-
-export default {
-  presets: [tailwindPreset({ breakpoints: defaultBreakpoints })],
-};
-```
-
-</details>
-
-<details>
-<summary><strong>Vanilla JS / Vue / Svelte / Solid</strong></summary>
-
-The core works everywhere — no React required:
-
-```ts
-// responsive.ts
-import { createBreakpoints, observeViewport, watchMedia, observePreference } from "reflow";
+import { createBreakpoints, observeViewport } from "reflow";
 
 const bp = createBreakpoints({ sm: 640, md: 768, lg: 1024 } as const);
 
-// Subscribe to viewport changes
-const unsub = observeViewport(({ width, height }) => {
-  console.log(`${bp.resolve(width)} — ${width}×${height}`);
+const unsub = observeViewport(({ width }) => {
+  console.log(bp.resolve(width));
 });
 
-// Watch a media query
-const mq = watchMedia("(prefers-color-scheme: dark)");
-mq.subscribe((matches) => console.log("Dark mode:", matches));
-
-// Watch user preferences
-observePreference("reducedMotion", (on) => {
-  document.body.classList.toggle("no-motion", on);
-});
+unsub();
 ```
 
-</details>
+## Framework support
 
-<p align="center"><sub>──────────── ✦ ────────────</sub></p>
+| Framework | Entry point | Status |
+|---|---|---|
+| React | `reflow/react` | Full hooks + components |
+| Vue 3 | `reflow/vue` | Composables + plugin |
+| Svelte 5 | `reflow/svelte` | Stores |
+| Solid | `reflow/solid` | Core functions |
+| Qwik | `reflow/qwik` | Core functions |
+| Preact | `reflow/preact` | React-compatible |
+| Angular | `reflow/angular` | Core functions |
+| Lit | `reflow/lit` | Core functions |
 
-## Ecosystem
+All adapters share the same framework-agnostic core. React, Vue, and Svelte ship dedicated entry points. Everything else uses the core directly.
 
-reflow is built to slot into the rest of your design-system toolchain.
+## Why reflow?
 
-| Integration | What it gives you |
-| :--- | :--- |
-| **Panda CSS plugin** | Bring typed breakpoints and responsive primitives into recipe-driven styling workflows. |
-| **Vanilla Extract integration** | Use `responsiveStyle()` and fluid helpers inside `.css.ts` files without adding runtime coupling. |
-| **Tailwind plugin** | Mirror a single breakpoint source of truth into Tailwind `screens` with `reflow/tailwind`. |
-| **Storybook addon** | Inspect breakpoints, preferences, and viewport state while building and reviewing components. |
+Most responsive libraries do one thing. A media query hook here, a viewport hook there, a fluid type calculator somewhere else. You end up with 5 packages, overlapping logic, and hydration errors to debug.
 
-<p align="center"><sub>──────────── ✦ ────────────</sub></p>
+Reflow puts it all in one place:
 
-## SSR Integration
+- **SSR-safe by default.** Every hook uses `useSyncExternalStore` with `getServerSnapshot`. Pair with `<ResponsiveProvider serverWidth={...}>` for correct first paint.
+- **Typed breakpoints.** `createBreakpoints({ sm: 640, md: 768 } as const)` gives you literal-typed keys with full autocomplete.
+- **Fluid typography.** `fluidClamp()` generates CSS `clamp()` at runtime. No more copy-pasting from utopia.fyi.
+- **Container queries.** ResizeObserver-based, no polyfill needed. Works in any framework.
+- **User preferences.** `prefers-reduced-motion`, `prefers-reduced-data`, `prefers-contrast`, `forced-colors`, `inverted-colors`. All typed, all SSR-safe.
+- **Server rendering.** `resolveBreakpointFromHints(headers)` reads Client Hints with UA fallback. Works with Next.js, Hono, Express, anything.
+- **Zero framework lock-in.** Core has no React dependency. Use it in Vue, Svelte, Solid, or plain JS.
 
-<details open>
-<summary><strong>Next.js App Router</strong></summary>
+## What's included
+
+| Module | Exports |
+|---|---|
+| **Core** (`reflow`) | breakpoints, viewport, media queries, container queries, preferences, pointer, DPR, safe area |
+| **Styles** (`reflow/styles`) | fluidClamp, fluidScale, containerQuery, responsiveStyle, safeArea, dvh/svh/lvh |
+| **Server** (`reflow/server`) | resolveBreakpointFromHints, resolveBreakpointFromUA, clientHintsResponseHeaders |
+| **Testing** (`reflow/testing`) | installMatchMediaMock, installResizeObserverMock, setWindowSize |
+| **Tailwind** (`reflow/tailwind`) | tailwindPreset |
+
+## SSR integration
+
+### Next.js App Router
 
 ```tsx
-// app/layout.tsx
 import { headers } from "next/headers";
 import { resolveBreakpointFromHints } from "reflow/server";
 import { ResponsiveProvider } from "reflow/react";
@@ -543,42 +156,18 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const { width } = resolveBreakpointFromHints(h);
 
   return (
-    <html lang="en">
-      <body>
-        <ResponsiveProvider serverWidth={width}>
-          {children}
-        </ResponsiveProvider>
-      </body>
-    </html>
+    <ResponsiveProvider serverWidth={width}>
+      {children}
+    </ResponsiveProvider>
   );
 }
 ```
 
-```ts
-// next.config.ts — opt the browser into Client Hints
-export default {
-  async headers() {
-    return [{
-      source: "/:path*",
-      headers: [
-        { key: "Accept-CH", value: "Sec-CH-Viewport-Width, Sec-CH-UA-Mobile" },
-        { key: "Critical-CH", value: "Sec-CH-Viewport-Width, Sec-CH-UA-Mobile" },
-      ],
-    }];
-  },
-};
-```
-
-</details>
-
-<details>
-<summary><strong>Express / Hono / Any Server</strong></summary>
+### Express / Hono / any server
 
 ```ts
-// server.ts
 import { resolveServerBreakpoint, clientHintsResponseHeaders } from "reflow/server";
 
-// Add Client Hints headers to responses
 app.use((req, res, next) => {
   for (const [key, value] of clientHintsResponseHeaders) {
     res.setHeader(key, value);
@@ -586,272 +175,146 @@ app.use((req, res, next) => {
   next();
 });
 
-// Resolve breakpoint from incoming request
 app.get("/", (req, res) => {
   const { breakpoint, width } = resolveServerBreakpoint(req.headers);
-  // breakpoint → "md", width → 768
 });
 ```
 
-</details>
-
-<p align="center"><sub>──────────── ✦ ────────────</sub></p>
-
-## Testing
-
-reflow ships test utilities so your component tests don't need a real browser:
-
-```ts
-// vitest.setup.ts (or jest.setup.ts)
-import {
-  installMatchMediaMock,
-  installResizeObserverMock,
-  setWindowSize,
-} from "reflow/testing";
-
-const matchMedia = installMatchMediaMock();
-const resizeObserver = installResizeObserverMock();
-
-// In your tests:
-setWindowSize(768, 1024);      // Simulate tablet viewport
-matchMedia.set("(prefers-color-scheme: dark)", true);
-resizeObserver.resize(myElement, { width: 500, height: 300 });
-```
-
-<p align="center"><sub>──────────── ✦ ────────────</sub></p>
-
-## Browser Support
-
-| Browser | Minimum Version |
-| :--- | :--- |
-| Chrome / Edge | Last 2 versions |
-| Firefox | Last 2 versions |
-| Safari | 16+ |
-
-**Container queries:** Safari 16+, Chromium 105+, Firefox 110+.
-**`prefers-reduced-data`:** Chromium-only — gracefully returns `false` elsewhere.
-
-<p align="center"><sub>──────────── ✦ ────────────</sub></p>
-
-## Bundle Size
+## Bundle size
 
 | Entry | Min + gzip |
-| :--- | ---: |
+|---|---|
 | `reflow` (core) | ~2.4 KB |
 | `reflow/react` | ~3.3 KB |
 | `reflow/styles` | ~1.3 KB |
 | `reflow/server` | ~0.8 KB |
-| **Total (all entries)** | **~7.8 KB** |
 
-Bundle budgets are enforced in CI via [size-limit](https://github.com/ai/size-limit). Every PR that exceeds the budget fails.
+Enforced in CI via [size-limit](https://github.com/ai/size-limit). Every PR that exceeds the budget fails.
 
-<p align="center"><sub>──────────── ✦ ────────────</sub></p>
+## Testing
 
-## API Reference
+Reflow ships test utilities so your component tests don't need a real browser:
+
+```ts
+import { installMatchMediaMock, installResizeObserverMock, setWindowSize } from "reflow/testing";
+
+const matchMedia = installMatchMediaMock();
+const resizeObserver = installResizeObserverMock();
+
+setWindowSize(768, 1024);
+matchMedia.set("(prefers-color-scheme: dark)", true);
+resizeObserver.resize(element, { width: 500, height: 300 });
+```
+
+## API reference
+
+Full API docs are in the source. Each module exports typed functions with JSDoc. Here are the main ones:
 
 <details>
-<summary><strong>Core</strong> — <code>reflow</code></summary>
+<summary><strong>Core exports</strong></summary>
 
-| Export | Type | Description |
-| :--- | :---: | :--- |
-| `defaultBreakpoints` | `const` | `{ xs: 0, sm: 640, md: 768, lg: 1024, xl: 1280, "2xl": 1536 }` |
-| `createBreakpoints(map)` | `fn` | Create a typed breakpoint system with `resolve`, `up`, `down`, `between`, `only` |
-| `watchMedia(query)` | `fn` | SSR-safe `matchMedia` wrapper — `.matches()`, `.subscribe()` |
-| `mq` | `const` | Prebuilt media query strings for common patterns |
-| `observeViewport(listener)` | `fn` | Subscribe to window resize/orientation changes |
-| `getViewport()` | `fn` | Snapshot `{ width, height, orientation }` |
-| `getVisualViewport()` | `fn` | Visual viewport snapshot (pinch-zoom aware) |
-| `observeVisualViewport(listener)` | `fn` | Subscribe to visual viewport changes |
-| `observeContainer(el, listener)` | `fn` | ResizeObserver-based container size subscription |
-| `getContainerSize(el)` | `fn` | Sync container size snapshot |
-| `matchesContainerRange(size, range)` | `fn` | Check if container matches `{ minPx?, maxPx? }` |
-| `observePreference(key, listener)` | `fn` | Watch `reducedMotion`, `dark`, `forcedColors`, etc. |
-| `getAllPreferences()` | `fn` | Snapshot of all preference booleans |
-| `observePointerCapabilities(listener)` | `fn` | Watch hover/coarse/fine pointer changes |
-| `observeDevicePixelRatio(listener)` | `fn` | Watch DPR changes (display switch, zoom) |
-| `observeSafeArea(listener)` | `fn` | Watch `env(safe-area-inset-*)` changes |
-| `resolveResponsive(system, value, width)` | `fn` | Pick value from breakpoint-keyed map |
-| `createFluidityStore(system, opts)` | `fn` | Shared reactive store for any framework |
+| Export | Description |
+|---|---|
+| `createBreakpoints(map)` | Create a typed breakpoint system with `resolve`, `up`, `down`, `between`, `only` |
+| `defaultBreakpoints` | `{ xs: 0, sm: 640, md: 768, lg: 1024, xl: 1280, "2xl": 1536 }` |
+| `watchMedia(query)` | SSR-safe `matchMedia` wrapper |
+| `observeViewport(listener)` | Subscribe to window resize/orientation |
+| `getViewport()` | Snapshot `{ width, height, orientation }` |
+| `observeContainer(el, listener)` | ResizeObserver-based container subscription |
+| `getContainerSize(el)` | Sync container size snapshot |
+| `matchesContainerRange(size, range)` | Check if container matches `{ minPx?, maxPx? }` |
+| `observePreference(key, listener)` | Watch reduced-motion, dark mode, forced-colors, etc. |
+| `getAllPreferences()` | Snapshot of all preference booleans |
+| `observePointerCapabilities(listener)` | Watch hover/coarse/fine pointer changes |
+| `observeDevicePixelRatio(listener)` | Watch DPR changes |
+| `observeSafeArea(listener)` | Watch `env(safe-area-inset-*)` |
+| `resolveResponsive(system, value, width)` | Pick value from breakpoint-keyed map |
+| `createFluidityStore(system, opts)` | Shared reactive store for any framework |
 
 </details>
 
 <details>
-<summary><strong>React</strong> — <code>reflow/react</code></summary>
+<summary><strong>React exports</strong></summary>
 
 | Export | Type | Description |
-| :--- | :---: | :--- |
-| `<ResponsiveProvider>` | `component` | Context provider — `serverWidth`, `serverHeight`, custom `system` |
-| `useBreakpoint()` | `hook` | Returns `{ active, is, above, below, between }` |
-| `useMediaQuery(query, serverDefault?)` | `hook` | SSR-safe `matchMedia` boolean |
-| `useViewport()` | `hook` | `{ width, height, orientation }` |
-| `useResponsiveValue(map)` | `hook` | Resolve `{ xs: 1, md: 2, xl: 4 }` → current value |
-| `usePreference(key, serverDefault?)` | `hook` | `"reduced-motion"` \| `"dark"` \| `"forced-colors"` \| … |
-| `usePointer(serverDefault?)` | `hook` | `{ hover, anyHover, coarse, fine }` |
-| `useDevicePixelRatio(serverDefault?)` | `hook` | Current DPR (retina = 2, etc.) |
-| `useSafeArea(serverDefault?)` | `hook` | `{ top, right, bottom, left }` in px |
-| `useContainerQuery(ref, range, serverDefault?)` | `hook` | Boolean — does container match width range? |
-| `useContainerSize(ref, serverDefault?)` | `hook` | `{ width, height }` of container element |
-| `useDynamicViewport(serverDefault?)` | `hook` | `{ dvh, svh, lvh }` in px |
-| `<Show>` | `component` | Conditional render: `on`, `above`, `below`, `between`, `fallback` |
-| `<Hide>` | `component` | Inverse of `<Show>` |
-| `<BreakpointBadge>` | `component` | Dev overlay — auto-hidden in production |
+|---|---|---|
+| `ResponsiveProvider` | component | Context provider with `serverWidth`, `serverHeight`, `system` |
+| `useBreakpoint()` | hook | `{ active, is, above, below, between }` |
+| `useMediaQuery(query)` | hook | SSR-safe matchMedia boolean |
+| `useViewport()` | hook | `{ width, height, orientation }` |
+| `useResponsiveValue(map)` | hook | Resolve breakpoint-keyed values |
+| `usePreference(key)` | hook | reduced-motion, dark, forced-colors, etc. |
+| `usePointer()` | hook | `{ hover, coarse, fine }` |
+| `useDevicePixelRatio()` | hook | Current DPR |
+| `useSafeArea()` | hook | `{ top, right, bottom, left }` in px |
+| `useContainerQuery(ref, range)` | hook | Boolean, does container match range? |
+| `useContainerSize(ref)` | hook | `{ width, height }` of container |
+| `useDynamicViewport()` | hook | `{ dvh, svh, lvh }` in px |
+| `Show` / `Hide` | component | Conditional render by breakpoint |
+| `BreakpointBadge` | component | Dev overlay, auto-hidden in production |
 
 </details>
 
 <details>
-<summary><strong>Vue 3</strong> — <code>reflow/vue</code></summary>
+<summary><strong>Styles exports</strong></summary>
 
-| Export | Type | Description |
-| :--- | :---: | :--- |
-| `useBreakpoint()` | `hook` | Returns `{ active, is, above, below, between }` |
-| `useMediaQuery(query, serverDefault?)` | `hook` | SSR-safe reactive media query boolean |
-| `useContainerQuery(elRef, range, serverDefault?)` | `hook` | Boolean — does template ref match width range? |
-| `useContainerSize(elRef, serverDefault?)` | `hook` | `{ width, height }` of the container element |
-| `useColorScheme(options?)` | `hook` | Returns `{ colorScheme, isDark, setColorScheme }` with optional persistence |
-| `usePreference(key, serverDefault?)` | `hook` | `"reduced-motion"` \| `"dark"` \| `"forced-colors"` \| … |
-| `useViewport()` | `hook` | `{ width, height, orientation }` |
-| `useDevicePixelRatio(serverDefault?)` | `hook` | Current DPR (retina = 2, etc.) |
-| `usePointer(serverDefault?)` | `hook` | `{ hover, anyHover, coarse, fine }` |
-| `useSafeArea(serverDefault?)` | `hook` | `{ top, right, bottom, left }` in px |
-| `createFluidityPlugin(options?)` | `plugin` | App plugin — provide `system`, `serverWidth`, `serverHeight` |
+| Export | Description |
+|---|---|
+| `fluidClamp(opts)` | Generate CSS `clamp()` for fluid sizing |
+| `fluidScale(steps, opts)` | Build a named fluid type scale |
+| `containerQuery(opts)` | Build `@container` rule string |
+| `responsiveStyle(system, prop, values)` | Breakpoint to media-query style objects |
+| `safeAreaInset(side, fallbackPx)` | CSS `env(safe-area-inset-*)` with fallback |
+| `dvh` / `svh` / `lvh` | Dynamic viewport unit helpers |
+| `visuallyHidden` | Screen-reader-only style object |
+| `logical` | Physical to logical property name map |
 
 </details>
 
-<details>
-<summary><strong>Svelte 5</strong> — <code>reflow/svelte</code></summary>
+## Browser support
 
-| Export | Type | Description |
-| :--- | :---: | :--- |
-| `breakpoint(system?)` | `store` | Active breakpoint store + `.is()`, `.above()`, `.below()`, `.between()` derived stores |
-| `mediaQuery(query, serverDefault?)` | `store` | SSR-safe reactive media query boolean |
-| `containerQuery(el, range, serverDefault?)` | `store` | Boolean — does container match width range? |
-| `containerSize(el, serverDefault?)` | `store` | `{ width, height }` of the container element |
-| `colorScheme(options?)` | `store` | Returns `{ scheme, isDark, set }` with optional persistence |
-| `preference(key, serverDefault?)` | `store` | `"reduced-motion"` \| `"dark"` \| `"forced-colors"` \| … |
-| `viewport()` | `store` | `{ width, height, orientation }` |
-| `devicePixelRatio(serverDefault?)` | `store` | Current DPR (retina = 2, etc.) |
-| `pointer(serverDefault?)` | `store` | `{ hover, anyHover, coarse, fine }` stores |
-| `safeArea(serverDefault?)` | `store` | `{ top, right, bottom, left }` in px |
+| Browser | Minimum |
+|---|---|
+| Chrome / Edge | Last 2 versions |
+| Firefox | Last 2 versions |
+| Safari | 16+ |
 
-</details>
+Container queries require Safari 16+, Chromium 105+, Firefox 110+. `prefers-reduced-data` is Chromium-only and gracefully returns `false` elsewhere.
 
-<details>
-<summary><strong>Styles</strong> — <code>reflow/styles</code></summary>
-
-| Export | Type | Description |
-| :--- | :---: | :--- |
-| `fluidClamp(opts)` | `fn` | Generate CSS `clamp()` for fluid sizing |
-| `fluidScale(steps, opts)` | `fn` | Build a named fluid type scale |
-| `containerQuery(opts)` | `fn` | Build `@container` rule string |
-| `defineContainer(name?)` | `fn` | CSS for `container-type` / `container-name` |
-| `responsiveStyle(system, prop, values)` | `fn` | Breakpoint → media-query style objects |
-| `safeAreaInset(side, fallbackPx)` | `fn` | CSS `env(safe-area-inset-*)` with fallback |
-| `safeAreaPadding(fallbackPx)` | `fn` | All-sides safe-area padding |
-| `dvh` / `svh` / `lvh` | `fn` | Dynamic viewport unit helpers |
-| `printOnly` / `screenOnly` | `const` | Media query strings |
-| `printStyle(declarations)` | `fn` | Wrap styles in `@media print` |
-| `visuallyHidden` | `const` | Screen-reader-only style object |
-| `visuallyHiddenCss` | `const` | Screen-reader-only CSS string |
-| `touchTargetMinPx` | `const` | Touch target minimums (`wcag`, `apple`, `material`) |
-| `logical` | `const` | Physical → logical property name map |
-| `toLogical(styles)` | `fn` | Convert physical CSS props to logical equivalents |
-
-</details>
-
-<details>
-<summary><strong>Server</strong> — <code>reflow/server</code></summary>
-
-| Export | Type | Description |
-| :--- | :---: | :--- |
-| `resolveBreakpointFromHints(headers, system?)` | `fn` | Client Hints → breakpoint + width |
-| `resolveBreakpointFromUserAgent(ua, system?)` | `fn` | UA-sniff fallback (mobile/desktop guess) |
-| `resolveServerBreakpoint(input, system?)` | `fn` | Tries hints, falls back to UA |
-| `clientHintsResponseHeaders` | `const` | `Accept-CH` + `Critical-CH` header entries |
-
-</details>
-
-<details>
-<summary><strong>Testing</strong> — <code>reflow/testing</code></summary>
-
-| Export | Type | Description |
-| :--- | :---: | :--- |
-| `installMatchMediaMock(initial?)` | `fn` | Controllable `matchMedia` — `.set()`, `.reset()`, `.uninstall()` |
-| `installResizeObserverMock()` | `fn` | Controllable `ResizeObserver` — `.resize()`, `.uninstall()` |
-| `setWindowSize(width, height)` | `fn` | Resize window + dispatch `resize` event |
-
-</details>
-
-<details>
-<summary><strong>Tailwind</strong> — <code>reflow/tailwind</code></summary>
-
-| Export | Type | Description |
-| :--- | :---: | :--- |
-| `tailwindPreset(system)` | `fn` | Tailwind preset that mirrors your breakpoints as `screens` |
-
-</details>
-
-<p align="center"><sub>──────────── ✦ ────────────</sub></p>
-
-## Used By
-
-Projects and design systems using reflow will be featured here soon. [**Add your project!**](https://github.com/valtors/reflow/issues/new?title=Add%20my%20project%20to%20the%20Used%20By%20section&body=Project%20name%3A%0ALink%3A%0AHow%20you%20use%20reflow%3A)
-
-<p align="center"><sub>──────────── ✦ ────────────</sub></p>
-
-## Star History
-
-<div align="center">
-
-[![Star History Chart](https://api.star-history.com/svg?repos=valtors/reflow&type=Date)](https://star-history.com/#valtors/reflow&Date)
-
-</div>
-
-<p align="center"><sub>──────────── ✦ ────────────</sub></p>
-
-## Sponsors
-
-<div align="center">
-  <strong>Help fund SSR-safe responsive tooling for the TypeScript ecosystem.</strong>
-  <br/>
-  <br/>
-  <a href="https://github.com/sponsors/valtors"><strong>Become a sponsor on GitHub Sponsors</strong></a>
-</div>
-
-<p align="center"><sub>──────────── ✦ ────────────</sub></p>
-
-## Contributing
-
-<div align="center">
-  <sub>Help shape the most polished responsive toolkit in the TypeScript ecosystem.</sub>
-</div>
-
-We'd love your help. Check out [**CONTRIBUTING.md**](./CONTRIBUTING.md) for the full guide.
+## Development
 
 ```bash
-# local development
 git clone https://github.com/valtors/reflow && cd reflow
 npm install
 npm run verify   # typecheck + lint + test + build + publint + attw + size
 ```
 
-Look for [`good first issue`](https://github.com/valtors/reflow/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) to get started. We follow the [Contributor Covenant](./CODE_OF_CONDUCT.md).
+## Roadmap
 
-<p align="center"><sub>──────────── ✦ ────────────</sub></p>
+**Shipped:**
+- Core responsive primitives (breakpoints, viewport, container, media, preferences)
+- React, Vue, Svelte, Solid, Qwik, Preact, Angular, Lit adapters
+- Fluid typography helpers
+- Server-side rendering utilities
+- Tailwind preset
+- Test utilities
+- CI with typecheck, lint, test, build, publint, attw, size-limit
+- Throttle/debounce support on viewport and container observers
+
+**Next:**
+- Custom hook generators (define your own responsive hooks from config)
+- DevTools browser extension
+- More framework-specific examples and starter templates
+- Migration guides from react-responsive, @vueuse/core, usehooks-ts
+
+## Contributing
+
+Check [CONTRIBUTING.md](./CONTRIBUTING.md) for the full guide. Look for [`good first issue`](https://github.com/valtors/reflow/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) labels to get started.
+
+We follow the [Contributor Covenant](./CODE_OF_CONDUCT.md).
 
 ## License
 
-<div align="center">
+[MIT](./LICENSE) (c) [Tamish Mhatre](https://github.com/tamish560)
 
-[MIT](./LICENSE) © [Tamish Mhatre](https://github.com/tamishmhatre) and [reflow contributors](https://github.com/valtors/reflow/graphs/contributors).
-
-<br/>
-
-<strong>If reflow saves you time, consider giving it a ⭐</strong>
-
-<br/>
-
-<sub>
-  Built for SSR-safe UI systems &mdash; and polished for teams that care about first impressions.
-</sub>
-
-</div>
+If reflow saves you time, star the repo.
