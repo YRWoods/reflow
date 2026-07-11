@@ -1,7 +1,7 @@
 "use client";
 
 import { type RefObject, useEffect, useState } from "react";
-import { getContainerSize, observeContainer, type ContainerSize } from "../core/container.js";
+import { type ContainerSize, getContainerSize, observeContainer } from "../core/container.js";
 
 export type UseElementSizeResult = { width: number; height: number };
 
