@@ -34,6 +34,12 @@ function readProbe(): SafeAreaInsets {
   };
 }
 
+/**
+ * Get the current safe-area insets for all four sides in pixels.
+ * Returns zeros during SSR and before first paint.
+ *
+ * @returns `{ top, right, bottom, left }` in CSS pixels.
+ */
 export function getSafeArea(): SafeAreaInsets {
   return readProbe();
 }
