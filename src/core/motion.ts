@@ -67,6 +67,13 @@ export function reduceMotion<T>(normal: T, reduced: T): T {
   return getReducedMotion() ? reduced : normal;
 }
 
+/**
+ * Create a spring physics simulation for animating values with natural motion.
+ * Respects `prefers-reduced-motion` by settling instantly when the preference is set.
+ *
+ * @param config - Optional `{ stiffness, damping, mass }` to customize spring behavior.
+ * @returns `{ tick, isSettled }` functions for stepping the simulation forward.
+ */
 export function createSpring(config: SpringConfig = {}): {
   /** Advance spring by dt milliseconds toward target */
   tick(current: SpringState, target: number, dt: number): SpringState;
