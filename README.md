@@ -22,6 +22,8 @@
 npm install reflow
 ```
 
+**Try it live:** [![Open in StackBlitz](https://img.shields.io/badge/StackBlitz-open%20demo-126CF3?style=flat-square&logo=stackblitz)](https://stackblitz.com/github/valtors/reflow/tree/main/examples/vite-react) [![Open in CodeSandbox](https://img.shields.io/badge/CodeSandbox-open%20demo-000000?style=flat-square&logo=codesandbox)](https://codesandbox.io/p/github/valtors/reflow/main?file=/examples/vite-react)
+
 ## What is this?
 
 Reflow gives you breakpoints, container queries, fluid typography, viewport tracking, and user preference detection in one library. It works in React, Vue, Svelte, Solid, Qwik, Preact, Lit, Angular, and plain JS. No hydration mismatch warnings. No `typeof window` checks scattered everywhere.
