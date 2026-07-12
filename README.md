@@ -324,3 +324,11 @@ We follow the [Contributor Covenant](./CODE_OF_CONDUCT.md).
 [MIT](./LICENSE) (c) [Tamish Mhatre](https://github.com/tamish560)
 
 If reflow saves you time, star the repo.
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=valtors/reflow&type=Date)](https://star-history.com/#valtors/reflow&Date)
+
+## Sponsors
+
+If reflow helps your work, consider [giving it a star](https://github.com/valtors/reflow/stargazers). It helps others discover it.
