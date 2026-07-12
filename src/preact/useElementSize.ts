@@ -1,14 +1,18 @@
 "use client";
 
-import { type RefObject, useEffect, useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import { type ContainerSize, getContainerSize, observeContainer } from "../core/container.js";
+
+export interface ElementRef<T extends Element = Element> {
+  current: T | null;
+}
 
 export type UseElementSizeResult = { width: number; height: number };
 
 const DEFAULT_SIZE: UseElementSizeResult = { width: 0, height: 0 };
 
 export function useElementSize(
-  ref: RefObject<Element | null>,
+  ref: ElementRef,
   serverDefault: UseElementSizeResult = DEFAULT_SIZE,
   options: { debounce?: number; throttle?: number } = {},
 ): UseElementSizeResult {
