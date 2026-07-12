@@ -1,13 +1,10 @@
+"use client";
 
 import { useSyncExternalStore } from "preact/hooks";
 import type { BreakpointMap } from "../core/breakpoints.js";
 import { type ResponsiveValue, resolveResponsive } from "../core/responsive-value.js";
 import { useFluidityContext } from "./context.js";
 
-/**
- * Resolve a responsive value (`T | Partial<Record<BreakpointKey, T>>`) to
- * the value matching the current breakpoint, with mobile-first fallback.
- */
 export function useResponsiveValue<T, B extends BreakpointMap>(
   value: ResponsiveValue<T, B>,
 ): T | undefined {
