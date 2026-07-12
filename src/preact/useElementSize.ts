@@ -2,10 +2,7 @@
 
 import { useEffect, useState } from "preact/hooks";
 import { type ContainerSize, getContainerSize, observeContainer } from "../core/container.js";
-
-export interface ElementRef<T extends Element = Element> {
-  current: T | null;
-}
+import type { ElementRef } from "./useContainerQuery.js";
 
 export type UseElementSizeResult = { width: number; height: number };
 
