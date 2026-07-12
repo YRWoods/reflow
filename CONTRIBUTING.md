@@ -112,3 +112,44 @@ We follow [Conventional Commits](https://www.conventionalcommits.org/):
 ## License
 
 By contributing, you agree that your contributions will be licensed under the [MIT License](./LICENSE).
+
+## For AI Agents
+
+If you're an AI agent contributing to reflow, here's what you need to know:
+
+1. Run `npm run verify` before committing. This runs typecheck, lint, test, and build. It must pass.
+2. Use the existing hooks as templates. Copy the pattern from `src/react/useBreakpoint.ts` or `src/solid/useBreakpoint.ts`.
+3. Every hook must be SSR-safe. No `window` or `document` access without a guard.
+4. Export new hooks from the framework's `index.ts`.
+5. Add tests in `test/` following the existing naming pattern.
+6. No comments in code unless logic is non-obvious.
+7. Keep zero runtime dependencies in core. Framework adapters may use framework-specific APIs.
+8. Commit messages: lowercase, short, no conventional commits prefix needed.
+
+### File Structure
+
+```
+src/
+  core/           # Framework-agnostic (breakpoints, media, viewport, store)
+  react/          # React hooks + components
+  vue/            # Vue composables + plugin
+  svelte/         # Svelte stores
+  solid/          # Solid hooks
+  qwik/           # Qwik adapters
+  preact/         # Preact (reuses react/)
+  angular/        # Angular wrappers
+  lit/            # Lit adapters
+  styles/         # CSS utilities (fluidClamp, viewport units)
+  testing/        # Test utilities
+  server/         # SSR helpers
+  tailwind/       # Tailwind preset
+```
+
+### Adding a Hook
+
+1. Create `src/<framework>/useNewHook.ts`
+2. Follow the pattern from an existing hook in the same framework
+3. Export from `src/<framework>/index.ts`
+4. Add a test in `test/`
+5. Run `npm run verify`
+6. Open a PR
