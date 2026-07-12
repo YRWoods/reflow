@@ -1,28 +1,35 @@
-import { type Signal, useSignal, useVisibleTask$ } from "@builder.io/qwik";
+import { type Signal, useComputed$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
 import { type ContainerSize, getContainerSize, observeContainer } from "../core/container.js";
+
+type ElementTarget = Signal<Element | null | undefined>;
 
 export type UseElementSizeResult = { width: number; height: number };
 
-const DEFAULT_SIZE: UseElementSizeResult = { width: 0, height: 0 };
-
 export function useElementSize(
-  ref: { current: Element | null },
-  serverDefault: UseElementSizeResult = DEFAULT_SIZE,
+  target: ElementTarget,
+  serverDefault: UseElementSizeResult = { width: 0, height: 0 },
   options: { debounce?: number; throttle?: number } = {},
-): Signal<UseElementSizeResult> {
-  const size = useSignal<UseElementSizeResult>(serverDefault);
+): { width: Signal<number>; height: Signal<number> } {
+  const size = useSignal<ContainerSize>({ ...serverDefault });
 
-  useVisibleTask$(({ cleanup }) => {
-    const el = ref.current;
-    if (!el) return;
-    size.value = getContainerSize(el);
-    const unsub = observeContainer(
-      el,
-      (s: ContainerSize) => { size.value = { width: s.width, height: s.height }; },
-      options,
-    );
-    cleanup(unsub);
+  useVisibleTask$(({ track, cleanup }) => {
+    const element = track(() => target.value);
+
+    if (!element) {
+      size.value = { ...serverDefault };
+      return;
+    }
+
+    size.value = getContainerSize(element);
+    const unsubscribe = observeContainer(element, (nextSize) => {
+      size.value = nextSize;
+    }, options);
+
+    cleanup(unsubscribe);
   });
 
-  return size;
+  return {
+    width: useComputed$(() => size.value.width),
+    height: useComputed$(() => size.value.height),
+  };
 }
