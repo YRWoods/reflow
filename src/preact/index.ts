@@ -11,3 +11,4 @@ export * from "./useDevicePixelRatio.js";
 export * from "./useResponsiveValue.js";
 export * from "./useDynamicViewport.js";
 export * from "./useElementSize.js";
+export * from "./useResponsiveImage.js";
